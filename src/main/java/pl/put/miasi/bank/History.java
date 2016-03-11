@@ -9,7 +9,11 @@ import pl.put.miasi.bank.bankOperation.BankOperation;
 public class History {
     private SortedList<BankOperation> bankOperations;
 
-    public void dodajOperacjeBankowa(BankOperation operacjaBankowa) {
-        bankOperations.add(operacjaBankowa);
+    public History() {
+        //bankOperations = new SortedList<BankOperation>();
+    }
+
+    public void addBankOperations(BankOperation bankOperation) {
+        bankOperations.add(bankOperation);
     }
 }
