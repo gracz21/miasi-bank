@@ -8,6 +8,7 @@ import pl.put.miasi.bank.rachunekBankowy.RachunekBankowy;
 public class Przelew extends OperacjaBankowa {
     private RachunekBankowy obcyRachunekBankowy;
 
+
     public Przelew(RachunekBankowy rachunekBankowy, RachunekBankowy obcyRachunekBankowy) {
         super("wplata", rachunekBankowy);
         this.obcyRachunekBankowy = obcyRachunekBankowy;

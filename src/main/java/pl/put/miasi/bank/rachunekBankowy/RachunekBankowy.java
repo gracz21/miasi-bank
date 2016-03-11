@@ -3,6 +3,7 @@ package pl.put.miasi.bank.rachunekBankowy;
 import pl.put.miasi.bank.Debet;
 import pl.put.miasi.bank.Historia;
 import pl.put.miasi.bank.Odsetki;
+import pl.put.miasi.bank.operacjaBankowa.OperacjeBankowe;
 import pl.put.miasi.bank.operacjaBankowa.Przelew;
 import pl.put.miasi.bank.operacjaBankowa.Wplata;
 
@@ -22,9 +23,6 @@ public class RachunekBankowy {
     }
 
     public void przelew(RachunekBankowy obcyRachunekBankowy, double kwota) {
-        Przelew przelew = new Przelew(this, obcyRachunekBankowy);
-        przelew.przelej(kwota);
-
-        historia.dodajOperacjeBankowa(przelew);
+        historia.dodajOperacjeBankowa(OperacjeBankowe.wplac(this, 500));
     }
 }

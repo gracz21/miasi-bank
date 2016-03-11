@@ -7,11 +7,9 @@ import pl.put.miasi.bank.rachunekBankowy.RachunekBankowy;
  */
 public abstract class OperacjaBankowa {
     protected String identyfikator;
-    protected RachunekBankowy rachunekBankowy;
 
-    public OperacjaBankowa(String identyfikator, RachunekBankowy rachunekBankowy) {
+    public OperacjaBankowa(String identyfikator) {
         this.identyfikator = identyfikator;
-        this.rachunekBankowy = rachunekBankowy;
     }
 
     public String getIdentyfikator() {
