@@ -1,4 +1,6 @@
-package pl.put.miasi.bank.bankOperation;
+package pl.put.miasi.bank.bankOperations;
+
+import pl.put.miasi.bank.bankProducts.BankAccount;
 
 import java.util.Date;
 
@@ -10,10 +12,14 @@ public abstract class BankOperation {
     protected Date realisationDate;
     protected String description;
 
-    public BankOperation(String id, String description) {
+    protected BankOperation(String id, String description, BankAccount bankAccount, double amount) {
         this.id = id;
         this.realisationDate = new Date();
         this.description = description;
+    }
+
+    public void realise() {
+        throw new UnsupportedOperationException();
     }
 
     public String getId() {

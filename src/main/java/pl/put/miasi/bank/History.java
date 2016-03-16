@@ -1,7 +1,7 @@
 package pl.put.miasi.bank;
 
 import javafx.collections.transformation.SortedList;
-import pl.put.miasi.bank.bankOperation.BankOperation;
+import pl.put.miasi.bank.bankOperations.BankOperation;
 
 /**
  * @author Bartosz Skotarek

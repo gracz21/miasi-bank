@@ -1,4 +1,6 @@
-package pl.put.miasi.bank.bankOperation;
+package pl.put.miasi.bank.bankOperations.bankProductOperations;
+
+import pl.put.miasi.bank.bankOperations.BankOperation;
 
 /**
  * @author Bartosz Skotarek

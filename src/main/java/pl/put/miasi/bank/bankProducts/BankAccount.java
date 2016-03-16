@@ -1,27 +1,32 @@
 package pl.put.miasi.bank.bankProducts;
 
-import pl.put.miasi.bank.Debit;
-import pl.put.miasi.bank.History;
-import pl.put.miasi.bank.Interest;
-import pl.put.miasi.bank.bankOperation.BankOperations;
-import pl.put.miasi.bank.bankOperation.Payment;
+import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
+
+import java.util.Date;
 
 /**
  * @author Bartosz Skotarek
  */
-public class BankAccount {
-    private Interest interest;
-    private Debit debit;
-    private History history;
+public class BankAccount extends BankProduct {
+    private Date dateOfCreation;
+    private double balance;
+    private DebitMechanism debitMechanism;
 
-    public void wplata(double kwota) {
-        Payment payment = new Payment(this, kwota);
-        payment.wplac(kwota);
-
-        history.dodajOperacjeBankowa(payment);
+    public BankAccount(DebitMechanism debitMechanism) {
+        this.dateOfCreation = new Date();
+        this.balance = 0.0;
+        this.debitMechanism = debitMechanism;
     }
 
-    public void przelew(BankAccount obcyBankAccount, double kwota) {
-        history.dodajOperacjeBankowa(BankOperations.wplac(this, 500));
+    public void updateBalance(double amount) {
+        this.balance += amount;
+    }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 }

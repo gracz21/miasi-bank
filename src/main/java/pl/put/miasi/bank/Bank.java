@@ -8,4 +8,5 @@ import java.util.List;
 public class Bank {
     private List<Client> clients;
     private History history;
+    private List<Report> reports;
 }
