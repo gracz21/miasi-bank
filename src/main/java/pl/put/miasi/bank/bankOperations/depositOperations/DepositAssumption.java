@@ -5,5 +5,5 @@ import pl.put.miasi.bank.bankOperations.BankOperation;
 /**
  * @author Bartosz Skotarek
  */
-public class DepositAssumption extends BankOperation {
+public class DepositAssumption extends DepositOperation {
 }

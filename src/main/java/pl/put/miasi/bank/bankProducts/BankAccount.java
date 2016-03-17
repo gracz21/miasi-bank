@@ -29,4 +29,8 @@ public class BankAccount extends BankProduct {
     public double getBalance() {
         return balance;
     }
+
+    public void setDebitMechanism(DebitMechanism debitMechanism) {
+        this.debitMechanism = debitMechanism;
+    }
 }

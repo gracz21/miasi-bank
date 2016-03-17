@@ -14,11 +14,10 @@ public abstract class BankOperation {
 
     protected BankOperation(String id, String description, BankAccount bankAccount, double amount) {
         this.id = id;
-        this.realisationDate = new Date();
         this.description = description;
     }
 
-    public void realise() {
+    protected void realise() {
         throw new UnsupportedOperationException();
     }
 
