@@ -1,5 +1,6 @@
 package pl.put.miasi.bank.bankOperations;
 
+import org.joda.time.DateTime;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 
 import java.util.Date;
@@ -9,8 +10,9 @@ import java.util.Date;
  */
 public abstract class BankOperation {
     private static long idGlobal;
+
     protected long id;
-    protected Date realisationDate;
+    protected DateTime realisationDate;
     protected String description;
     protected BankProduct bankProduct;
 
@@ -24,7 +26,7 @@ public abstract class BankOperation {
         return id;
     }
 
-    public Date getRealisationDate() {
+    public DateTime getRealisationDate() {
         return realisationDate;
     }
 

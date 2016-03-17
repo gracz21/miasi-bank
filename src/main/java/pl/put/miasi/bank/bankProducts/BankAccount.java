@@ -16,6 +16,14 @@ public class BankAccount extends BankProduct {
         this.debitMechanism = debitMechanism;
     }
 
+    public double getMaxDebit() {
+        if(debitMechanism == null) {
+            return 0;
+        } else {
+            return debitMechanism.getMaxDebit();
+        }
+    }
+
     public Date getDateOfCreation() {
         return dateOfCreation;
     }
