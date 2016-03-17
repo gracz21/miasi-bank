@@ -13,7 +13,7 @@ public class History {
         //bankOperations = new SortedList<BankOperation>();
     }
 
-    public void addBankOperations(BankOperation bankOperation) {
+    public void addBankOperation(BankOperation bankOperation) {
         bankOperations.add(bankOperation);
     }
 }
