@@ -10,7 +10,7 @@ import java.security.InvalidParameterException;
 /**
  * @author Bartosz Skotarek
  */
-public class BankAccountOperationUtil {
+public abstract class BankAccountOperationUtil {
     public static void transfer(BankAccount sourceBankAccount, BankAccount targetBankAccount, String description, double amount) throws BalanceException, InvalidParameterException {
         if(amount < 0) {
             throw new InvalidParameterException("Amount is negative");
