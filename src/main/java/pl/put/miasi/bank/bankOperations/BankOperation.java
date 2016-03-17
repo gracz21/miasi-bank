@@ -1,6 +1,6 @@
 package pl.put.miasi.bank.bankOperations;
 
-import pl.put.miasi.bank.bankProducts.BankAccount;
+import pl.put.miasi.bank.bankProducts.BankProduct;
 
 import java.util.Date;
 
@@ -8,20 +8,19 @@ import java.util.Date;
  * @author Bartosz Skotarek
  */
 public abstract class BankOperation {
-    protected String id;
+    private static long idGlobal;
+    protected long id;
     protected Date realisationDate;
     protected String description;
+    protected BankProduct bankProduct;
 
-    protected BankOperation(String id, String description, BankAccount bankAccount, double amount) {
-        this.id = id;
+    protected BankOperation(String description, BankProduct bankProduct) {
+        this.id = idGlobal++;
         this.description = description;
+        this.bankProduct = bankProduct;
     }
 
-    protected void realise() {
-        throw new UnsupportedOperationException();
-    }
-
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -31,5 +30,9 @@ public abstract class BankOperation {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getOperationName() {
+        throw new UnsupportedOperationException();
     }
 }

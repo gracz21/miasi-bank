@@ -9,28 +9,14 @@ import java.util.Date;
  */
 public class BankAccount extends BankProduct {
     private Date dateOfCreation;
-    private double balance;
     private DebitMechanism debitMechanism;
 
     public BankAccount(DebitMechanism debitMechanism) {
         this.dateOfCreation = new Date();
-        this.balance = 0.0;
         this.debitMechanism = debitMechanism;
-    }
-
-    public void updateBalance(double amount) {
-        this.balance += amount;
     }
 
     public Date getDateOfCreation() {
         return dateOfCreation;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setDebitMechanism(DebitMechanism debitMechanism) {
-        this.debitMechanism = debitMechanism;
     }
 }

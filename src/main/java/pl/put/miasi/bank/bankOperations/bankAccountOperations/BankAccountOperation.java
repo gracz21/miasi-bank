@@ -1,11 +1,10 @@
 package pl.put.miasi.bank.bankOperations.bankAccountOperations;
 
 import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.BankAccount;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 
 /**
- * @author Bartosz Skotarek
+ * Operacje na rachunkach bankowych
  */
 public abstract class BankAccountOperation extends BankOperation {
     protected double amount;

@@ -4,18 +4,18 @@ import pl.put.miasi.bank.bankProducts.BankAccount;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 
 /**
- * @author Bartosz Skotarek
+ * Przelew
  */
 public class Transfer extends BankAccountOperation {
     private BankProduct targetBankProduct;
 
-    public Transfer(String description, BankProduct bankProduct, BankProduct targetBankProduct, double amount) {
-        super(description, bankProduct, amount);
+    public Transfer(String description, BankAccount bankAccount, BankAccount targetBankProduct, double amount) {
+        super(description, bankAccount, amount);
         this.targetBankProduct = targetBankProduct;
     }
 
     @Override
-    public String toString() {
+    public String getOperationName() {
         return "Transfer";
     }
 }

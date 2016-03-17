@@ -1,22 +1,19 @@
 package pl.put.miasi.bank.bankOperations.bankAccountOperations;
 
 import pl.put.miasi.bank.bankProducts.BankAccount;
-
-import java.util.Date;
+import pl.put.miasi.bank.bankProducts.BankProduct;
 
 /**
- * @author Bartosz Skotarek
+ * Wplata
  */
 public class Payment extends BankAccountOperation {
 
-    public Payment(String description, BankAccount bankAccount, double amount) {
-        super("Payment", description, bankAccount, amount);
-        this.realise();
+    public Payment(String description, BankProduct bankProduct, double amount) {
+        super(description, bankProduct, amount);
     }
 
     @Override
-    protected void realise() {
-        this.bankAccount.updateBalance(this.amount);
-        this.realisationDate = new Date();
+    public String getOperationName() {
+        return "Payment";
     }
 }

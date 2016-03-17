@@ -1,9 +1,12 @@
 package pl.put.miasi.bank.bankOperations.depositOperations;
 
-import pl.put.miasi.bank.bankOperations.BankOperation;
+import pl.put.miasi.bank.bankProducts.Deposit;
 
 /**
- * @author Bartosz Skotarek
+ * Zalozenie lokaty
  */
 public class DepositAssumption extends DepositOperation {
+    protected DepositAssumption(String description, Deposit deposit) {
+        super(description, deposit);
+    }
 }
