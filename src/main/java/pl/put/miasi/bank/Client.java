@@ -1,9 +1,8 @@
 package pl.put.miasi.bank;
 
-import pl.put.miasi.bank.bankProducts.BankAccount;
+import pl.put.miasi.bank.bankProducts.BankProduct;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Bartosz Skotarek
@@ -12,17 +11,17 @@ public class Client {
     private String firstName;
     private String lastName;
     private String pesel;
-    private List<BankAccount> bankAccounts;
+    private ArrayList<BankProduct> bankProducts;
 
     public Client(String firstName, String lastName, String pesel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;
-        bankAccounts = new ArrayList<BankAccount>();
+        bankProducts = new ArrayList<BankProduct>();
     }
 
-    public void addBankAccount(BankAccount bankAccount) {
-        bankAccounts.add(bankAccount);
+    public void addBankProduct(BankProduct bankProduct) {
+        bankProducts.add(bankProduct);
     }
 
     public String getFirstName() {
@@ -35,6 +34,10 @@ public class Client {
 
     public String getPesel() {
         return pesel;
+    }
+
+    public ArrayList<BankProduct> getBankProducts() {
+        return bankProducts;
     }
 
 }

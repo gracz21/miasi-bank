@@ -1,12 +1,13 @@
 package pl.put.miasi.bank;
 
+import pl.put.miasi.bank.bankProducts.BankProduct;
+
 import java.util.List;
 
 /**
  * @author Bartosz Skotarek
  */
 public class Bank {
-    private List<Client> clients;
-    private History history;
+    private List<BankProduct> bankProducts;
     private List<Report> reports;
 }
