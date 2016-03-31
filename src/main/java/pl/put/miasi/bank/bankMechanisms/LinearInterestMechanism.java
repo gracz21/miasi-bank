@@ -4,11 +4,12 @@ package pl.put.miasi.bank.bankMechanisms;
  * Mechanizm odestkowy
  */
 public class LinearInterestMechanism extends InterestMechanism {
-    public LinearInterestMechanism(double interestRate, boolean linear) {
-        super(interestRate, linear);
+    public LinearInterestMechanism(double interestRate) {
+        super(interestRate);
     }
 
-    public double calculateBalance(double balance) {
-        return balance * interestRate;
+    @Override
+    public double calculateInterest(double value) {
+        return value * interestRate;
     }
 }

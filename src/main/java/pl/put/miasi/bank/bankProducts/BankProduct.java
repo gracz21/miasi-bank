@@ -18,7 +18,6 @@ public abstract class BankProduct {
     public BankProduct(InterestMechanism interestMechanism) {
         this.id = UUID.randomUUID();
         this.interestMechanism = interestMechanism;
-        this.balance = 0.0;
     }
 
     public String getUUID() {
@@ -42,7 +41,6 @@ public abstract class BankProduct {
     }
 
     public void setInterestMechanism(InterestMechanism interestMechanism) {
-
         this.interestMechanism = interestMechanism;
     }
 }

@@ -6,7 +6,19 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
  * @author Bartosz Skotarek
  */
 public class Credit extends BankProduct {
-    public Credit(InterestMechanism interestMechanism) {
+    private BankAccount bankAccount;
+
+    public Credit(InterestMechanism interestMechanism, BankAccount bankAccount, double balance) {
         super(interestMechanism);
+        this.bankAccount = bankAccount;
+        this.balance = balance;
+    }
+
+    public double calculateInstallment() {
+        return balance + interestMechanism.calculateInterest(this.balance);
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
     }
 }

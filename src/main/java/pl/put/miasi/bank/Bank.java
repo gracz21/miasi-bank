@@ -1,6 +1,6 @@
 package pl.put.miasi.bank;
 
-import pl.put.miasi.bank.bankProducts.BankProduct;
+import pl.put.miasi.bank.reports.Report;
 
 import java.util.List;
 
@@ -8,6 +8,10 @@ import java.util.List;
  * @author Bartosz Skotarek
  */
 public class Bank {
-    private List<BankProduct> bankProducts;
+    private List<Client> clients;
     private List<Report> reports;
+
+    public void addClient(Client client) {
+        clients.add(client);
+    }
 }
