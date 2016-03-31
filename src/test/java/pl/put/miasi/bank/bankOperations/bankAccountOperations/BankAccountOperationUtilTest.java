@@ -2,8 +2,10 @@ package pl.put.miasi.bank.bankOperations.bankAccountOperations;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.put.miasi.bank.Client;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.LinearInterestMechanism;
+import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
 import pl.put.miasi.bank.bankOperations.exception.BalanceException;
 import pl.put.miasi.bank.bankProducts.BankAccount;
 
@@ -15,13 +17,17 @@ import static org.junit.Assert.*;
  * @author Bartosz Skotarek
  */
 public class BankAccountOperationUtilTest {
-    BankAccount sourceBankAccount;
-    BankAccount targetBankAccount;
+    private BankAccount sourceBankAccount;
+    private BankAccount targetBankAccount;
 
     @Before
     public void before() {
-        sourceBankAccount = new BankAccount(new LinearInterestMechanism(15, true));
-        targetBankAccount = new BankAccount(new LinearInterestMechanism(15, true));
+        try {
+            sourceBankAccount = new BankAccount(new LinearInterestMechanism(0.2), new Client("Test", "Test", "12345678901"));
+            targetBankAccount = new BankAccount(new LinearInterestMechanism(0.2), new Client("Test", "Test", "12345678901"));
+        } catch(InterestRateException e) {
+            e.printStackTrace();
+        }
     }
 
     @org.junit.Test

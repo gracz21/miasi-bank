@@ -7,7 +7,7 @@ public abstract class BankProductOperationUtil {
     public static void interestCalculation(String description, BankProduct bankProduct) {
         InterestCalculation interestCalculation = new InterestCalculation(description, bankProduct);
         InterestMechanism currentInterestMechanism = bankProduct.getInterestMechanism();
-        bankProduct.updateBalance(currentInterestMechanism.calculateBalance(bankProduct.getBalance()));
+        bankProduct.updateBalance(currentInterestMechanism.calculateInterest(bankProduct.getBalance()));
     }
 
     public static void InterestMechanismChange(String description, BankProduct bankProduct, InterestMechanism interestMechanism) {
@@ -17,6 +17,6 @@ public abstract class BankProductOperationUtil {
     }
 
     public static void reportCreation() {
-
+        //TODO
     }
 }

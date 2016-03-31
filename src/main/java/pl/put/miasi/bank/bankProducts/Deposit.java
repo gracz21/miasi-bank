@@ -11,6 +11,7 @@ public class Deposit extends BankProduct {
     public Deposit(InterestMechanism interestMechanism, BankAccount bankAccount, double balance) {
         super(interestMechanism);
         this.bankAccount = bankAccount;
+        //TODO wyjatek przy ujemnym balance ???
         this.balance = balance;
     }
 

@@ -14,5 +14,6 @@ public class History {
 
     public void addBankOperation(BankOperation bankOperation) {
         bankOperations.add(bankOperation);
+        //TODO sortowanie po czasie transakcji
     }
 }

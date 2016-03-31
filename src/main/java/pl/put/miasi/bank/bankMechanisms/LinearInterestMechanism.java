@@ -1,10 +1,12 @@
 package pl.put.miasi.bank.bankMechanisms;
 
+import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
+
 /**
  * Mechanizm odestkowy
  */
 public class LinearInterestMechanism extends InterestMechanism {
-    public LinearInterestMechanism(double interestRate) {
+    public LinearInterestMechanism(double interestRate) throws InterestRateException {
         super(interestRate);
     }
 
