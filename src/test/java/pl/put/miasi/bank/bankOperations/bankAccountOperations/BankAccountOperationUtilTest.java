@@ -21,16 +21,12 @@ public class BankAccountOperationUtilTest {
     private BankAccount targetBankAccount;
 
     @Before
-    public void before() {
-        try {
-            sourceBankAccount = new BankAccount(new LinearInterestMechanism(0.2), new Client("Test", "Test", "12345678901"));
-            targetBankAccount = new BankAccount(new LinearInterestMechanism(0.2), new Client("Test", "Test", "12345678901"));
-        } catch(InterestRateException e) {
-            e.printStackTrace();
-        }
+    public void before() throws InterestRateException {
+        sourceBankAccount = new BankAccount();
+        targetBankAccount = new BankAccount();
     }
 
-    @org.junit.Test
+    @Test
     public void testPayment() throws Exception {
         BankAccountOperationUtil.payment(targetBankAccount, "Test", 450.0);
         assertEquals(targetBankAccount.getBalance(), 450.0, 0);

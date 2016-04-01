@@ -3,27 +3,11 @@ package pl.put.miasi.bank.bankProducts;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 
 /**
- * @author Bartosz Skotarek
+ * Kredyt
  */
 public class Credit extends BankProduct {
-    private BankAccount bankAccount;
-
-    public Credit(InterestMechanism interestMechanism, BankAccount bankAccount, double balance) {
-        super(interestMechanism);
-        this.bankAccount = bankAccount;
-        //TODO wyjatek przy ujemnym balance ???
+    public Credit(double balance) {
+        super();
         this.balance = balance;
-    }
-
-    public double calculateInstallment() {
-        return balance + interestMechanism.calculateInterest(this.balance);
-    }
-
-    public void payCredit() {
-        balance = 0.0;
-    }
-
-    public BankAccount getBankAccount() {
-        return bankAccount;
     }
 }

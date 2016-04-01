@@ -15,28 +15,28 @@ public class BankProductOperationUtilTest {
     private BankProduct bankProduct;
 
     @Before
-    public void before() {
-        try {
-            bankProduct = new BankAccount(new LinearInterestMechanism(0.15), new Client("Test", "Test", "12345678901"));
-        } catch(InterestRateException e) {
-            e.printStackTrace();
-        }
+    public void before() throws InterestRateException {
+        bankProduct = new BankAccount();
+        bankProduct.setInterestMechanism(new LinearInterestMechanism(0.5));
+        bankProduct.updateBalance(1000);
     }
 
     @Test
-    public void testInterestCalculation() throws Exception {
+    public void testCalculateInterest() throws InterestRateException {
+        BankProductOperationUtil.calculateInterest("Obliczenie odsetek", bankProduct);
 
+        assertEquals(bankProduct.getBalance(), 1500, 0);
     }
 
     @Test
-    public void testInterestMechanismChange() throws Exception {
+    public void testChangeInterestMechanism() throws Exception {
         InterestMechanism differentInterestMechanism = new LinearInterestMechanism(0.20);
-        BankProductOperationUtil.InterestMechanismChange("Test", bankProduct, differentInterestMechanism);
+        BankProductOperationUtil.changeInterestMechanism("Test", bankProduct, differentInterestMechanism);
         assertEquals(bankProduct.getInterestMechanism(), differentInterestMechanism);
     }
 
     @Test
-    public void testReportCreation() throws Exception {
-
+    public void testcreaeteReport() throws Exception {
+        // TODO zrobic
     }
 }

@@ -7,6 +7,8 @@ import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Bartosz Skotarek
@@ -14,17 +16,12 @@ import java.util.Date;
 public class BankAccount extends BankProduct {
     private DateTime dateOfCreation = new DateTime();
     private DebitMechanism debitMechanism;
-    private Client client;
 
-    public BankAccount(InterestMechanism interestMechanism, Client client) {
-        super(interestMechanism);
-        this.client = client;
+    public BankAccount() {
         this.balance = 0.0;
     }
 
-    public BankAccount(InterestMechanism interestMechanism, Client client, DebitMechanism debitMechanism) {
-        super(interestMechanism);
-        this.client = client;
+    public BankAccount(DebitMechanism debitMechanism) {
         this.debitMechanism = debitMechanism;
     }
 
@@ -42,10 +39,6 @@ public class BankAccount extends BankProduct {
 
     public DebitMechanism getDebitMechanism() {
         return debitMechanism;
-    }
-
-    public Client getClient() {
-        return client;
     }
 
     public void setDebitMechanism(DebitMechanism debitMechanism) {

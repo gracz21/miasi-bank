@@ -15,9 +15,8 @@ public abstract class BankProduct {
     protected InterestMechanism interestMechanism;
     protected double balance;
 
-    public BankProduct(InterestMechanism interestMechanism) {
+    public BankProduct() {
         this.id = UUID.randomUUID();
-        this.interestMechanism = interestMechanism;
     }
 
     public String getUUID() {
@@ -30,6 +29,10 @@ public abstract class BankProduct {
 
     public double getBalance() {
         return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public void updateBalance(double balance) {
