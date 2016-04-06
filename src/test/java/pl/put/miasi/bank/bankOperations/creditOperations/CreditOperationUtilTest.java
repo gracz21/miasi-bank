@@ -27,8 +27,6 @@ public class CreditOperationUtilTest extends EasyMockSupport {
     public void before() throws InterestRateException, BalanceException {
         bankAccount = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
-        //bankAccount.setInterestMechanism(new LinearInterestMechanism(0.5));
-        //bankAccount.updateBalance(1000);
     }
 
     @Test
