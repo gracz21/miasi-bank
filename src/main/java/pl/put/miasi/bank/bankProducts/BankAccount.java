@@ -5,6 +5,7 @@ import pl.put.miasi.bank.Client;
 import pl.put.miasi.bank.History;
 import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
+import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,7 +23,17 @@ public class BankAccount extends BankProduct {
     }
 
     public BankAccount(DebitMechanism debitMechanism) {
+        this.balance = 0.0;
         this.debitMechanism = debitMechanism;
+    }
+
+    @Override
+    public void updateBalance(double amount) throws BalanceException {
+        if(this.balance + this.getMaxDebit() >= -amount) {
+            balance += amount;
+        } else {
+            throw new BalanceException("Insufficient balance");
+        }
     }
 
     public double getMaxDebit() {

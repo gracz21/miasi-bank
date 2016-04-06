@@ -10,4 +10,8 @@ public class Credit extends BankProduct {
         super();
         this.balance = balance;
     }
+
+    public double calculateInstallment() {
+        return balance + interestMechanism.calculateInterest(this.balance);
+    }
 }

@@ -21,7 +21,7 @@ public class Client {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;
-        bankProducts = new LinkedList<>();
+        bankProducts = new LinkedList<BankProduct>();
     }
 
     public void addBankProduct(BankProduct bankProduct) {

@@ -1,4 +1,4 @@
-package pl.put.miasi.bank.bankOperations.exception;
+package pl.put.miasi.bank.bankProducts.exception;
 
 /**
  * @author Bartosz Skotarek

@@ -1,12 +1,11 @@
 package pl.put.miasi.bank.bankOperations.bankAccountOperations;
 
+import static org.easymock.EasyMock.*;
+import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
-import pl.put.miasi.bank.Client;
-import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
-import pl.put.miasi.bank.bankMechanisms.LinearInterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
-import pl.put.miasi.bank.bankOperations.exception.BalanceException;
+import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 import pl.put.miasi.bank.bankProducts.BankAccount;
 
 import java.security.InvalidParameterException;
@@ -16,59 +15,96 @@ import static org.junit.Assert.*;
 /**
  * @author Bartosz Skotarek
  */
-public class BankAccountOperationUtilTest {
+public class BankAccountOperationUtilTest extends EasyMockSupport {
     private BankAccount sourceBankAccount;
     private BankAccount targetBankAccount;
+    private double amount;
 
     @Before
     public void before() throws InterestRateException {
-        sourceBankAccount = new BankAccount();
-        targetBankAccount = new BankAccount();
+        sourceBankAccount = mock(BankAccount.class);
+        targetBankAccount = mock(BankAccount.class);
     }
 
     @Test
     public void testPayment() throws Exception {
-        BankAccountOperationUtil.payment(targetBankAccount, "Test", 450.0);
-        assertEquals(targetBankAccount.getBalance(), 450.0, 0);
+        amount = 450;
+
+        targetBankAccount.updateBalance(eq(amount));
+        targetBankAccount.addBankOperation(isA(Payment.class));
+        replayAll();
+
+        BankAccountOperationUtil.payment(targetBankAccount, "Test", amount);
+        verifyAll();
     }
 
-    @Test(expected = InvalidParameterException.class)
-    public void testPaymentAmountNegative() {
-        BankAccountOperationUtil.payment(targetBankAccount, "Test", -10.0);
+    @Test
+    public void testPaymentAmountNegative() throws BalanceException {
+        amount = -10.0;
+
+        replayAll();
+
+        try {
+            BankAccountOperationUtil.payment(targetBankAccount, "Test", -10.0);
+            fail();
+        } catch(InvalidParameterException e) {
+            verifyAll();
+        }
     }
 
     @Test
     public void testWithdraw() throws BalanceException {
-        BankAccountOperationUtil.payment(targetBankAccount, "Test", 300.0);
+        amount = 100;
+
+        targetBankAccount.updateBalance(eq(-amount));
+        targetBankAccount.addBankOperation(isA(Withdrawal.class));
+        replayAll();
+
         BankAccountOperationUtil.withdraw(targetBankAccount, "Test", 100.0);
-        assertEquals(targetBankAccount.getBalance(), 200.0, 0);
+        verifyAll();
     }
 
-    @Test(expected = InvalidParameterException.class)
+    @Test
     public void testWithdrawAmountNegative() throws BalanceException {
-        BankAccountOperationUtil.withdraw(targetBankAccount, "Test", -100.0);
-    }
+        amount = -100.0;
 
-    @Test(expected = BalanceException.class)
-    public void testWithdrawBalanceException() throws BalanceException {
-        BankAccountOperationUtil.withdraw(targetBankAccount, "Test", 100.0);
+        replayAll();
+
+        try {
+            BankAccountOperationUtil.withdraw(targetBankAccount, "Test", amount);
+            fail();
+        } catch(InvalidParameterException e) {
+            verifyAll();
+        }
     }
 
     @Test
     public void testTransfer() throws BalanceException {
-        BankAccountOperationUtil.payment(sourceBankAccount, "Test", 150.0);
+        amount = 50.0;
+
+        sourceBankAccount.updateBalance(eq(-amount));
+        sourceBankAccount.addBankOperation(isA(Transfer.class));
+
+        targetBankAccount.updateBalance(eq(amount));
+        targetBankAccount.addBankOperation(isA(Transfer.class));
+
+        replayAll();
+
         BankAccountOperationUtil.transfer(sourceBankAccount, targetBankAccount, "Test", 50.0);
-        assertEquals(sourceBankAccount.getBalance(), 100.0, 0);
-        assertEquals(targetBankAccount.getBalance(), 50.0, 0);
+        verifyAll();
     }
 
-    @Test(expected = InvalidParameterException.class)
+    @Test
     public void testTransferAmountNegative() throws BalanceException {
-        BankAccountOperationUtil.transfer(sourceBankAccount, targetBankAccount, "Test", -100.0);
-    }
+        amount = -100.0;
 
-    @Test(expected = BalanceException.class)
-    public void testTransferBalanceException() throws BalanceException {
-        BankAccountOperationUtil.transfer(sourceBankAccount, targetBankAccount, "Test", 100.0);
+        replayAll();
+        try {
+            BankAccountOperationUtil.transfer(sourceBankAccount, targetBankAccount, "Test", amount);
+            fail();
+        } catch(InvalidParameterException e) {
+            verifyAll();
+        }
+
     }
 }

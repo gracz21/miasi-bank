@@ -3,6 +3,7 @@ package pl.put.miasi.bank.bankProducts;
 import pl.put.miasi.bank.History;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
+import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.util.UUID;
 
@@ -35,8 +36,12 @@ public abstract class BankProduct {
         this.balance = balance;
     }
 
-    public void updateBalance(double balance) {
-        this.balance += balance;
+    public void updateBalance(double amount) throws BalanceException {
+        if(this.balance + amount >= 0) {
+            this.balance += amount;
+        } else {
+            throw new BalanceException("Insufficient balance");
+        }
     }
 
     public InterestMechanism getInterestMechanism() {
