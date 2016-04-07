@@ -11,17 +11,15 @@ import java.util.UUID;
  * @author Kamil Walkowiak
  */
 public abstract class BankProduct {
-    protected UUID id;
-    protected History history = new History();
-    protected InterestMechanism interestMechanism;
-    protected double balance;
+    private static long idGlobal;
 
-    public BankProduct() {
-        this.id = UUID.randomUUID();
-    }
+    private long id = idGlobal++;
+    private History history = new History();
+    private InterestMechanism interestMechanism;
+    private double balance;
 
-    public String getUUID() {
-        return id.toString();
+    public BankProduct(double balance) {
+        this.balance = balance;
     }
 
     public void addBankOperation(BankOperation bankOperation) {
@@ -42,6 +40,10 @@ public abstract class BankProduct {
         } else {
             throw new BalanceException("Insufficient balance");
         }
+    }
+
+    public double calculateInterest(double amount) {
+        return interestMechanism.calculateInterest(amount);
     }
 
     public InterestMechanism getInterestMechanism() {

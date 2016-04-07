@@ -1,6 +1,7 @@
 package pl.put.miasi.bank.bankOperations.creditOperations;
 
 import static org.easymock.EasyMock.*;
+
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class CreditOperationUtilTest extends EasyMockSupport {
     }
 
     @Test
-    public void testTakeCreditInsufficientResources() throws Exception {
+    public void testTakeCredit() throws Exception {
         amount = 1000.0;
 
         bankAccount.updateBalance(eq(amount));
@@ -42,15 +43,15 @@ public class CreditOperationUtilTest extends EasyMockSupport {
     }
 
     @Test
-    public void testTakeCredit() throws Exception {
+    public void testTakeCreditInsufficientResources() throws Exception {
         amount = -1000.0;
 
         replayAll();
 
         try {
-            CreditOperationUtil.takeCredit("Wziecie kredytu", bankAccount, interestMechanism, 10000);
+            CreditOperationUtil.takeCredit("Wziecie kredytu", bankAccount, interestMechanism, amount);
             fail();
-        } catch(InvalidParameterException e) {
+        } catch (InvalidParameterException e) {
             verifyAll();
         }
     }
@@ -61,7 +62,7 @@ public class CreditOperationUtilTest extends EasyMockSupport {
         double interest = 100.0;
         Credit credit = new Credit(amount);
 
-        bankAccount.updateBalance(eq(-amount-interest));
+        bankAccount.updateBalance(eq(-amount - interest));
         bankAccount.addBankOperation(isA(CreditInstallmentRepayment.class));
 
         expect(interestMechanism.calculateInterest(eq(amount))).andReturn(interest);

@@ -19,18 +19,18 @@ public class BankAccount extends BankProduct {
     private DebitMechanism debitMechanism;
 
     public BankAccount() {
-        this.balance = 0.0;
+        super(0);
     }
 
     public BankAccount(DebitMechanism debitMechanism) {
-        this.balance = 0.0;
+        super(0);
         this.debitMechanism = debitMechanism;
     }
 
     @Override
     public void updateBalance(double amount) throws BalanceException {
-        if(this.balance + this.getMaxDebit() >= -amount) {
-            balance += amount;
+        if(getBalance() + this.getMaxDebit() >= -amount) {
+            updateBalance(amount);
         } else {
             throw new BalanceException("Insufficient balance");
         }

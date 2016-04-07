@@ -7,11 +7,10 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
  */
 public class Deposit extends BankProduct {
     public Deposit(double balance) {
-        super();
-        this.balance = balance;
+        super(balance);
     }
 
     public void brokeDeposit() {
-        this.balance = 0.0;
+        setBalance(0);
     }
 }
