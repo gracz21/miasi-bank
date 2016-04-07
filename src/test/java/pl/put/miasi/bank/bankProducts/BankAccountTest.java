@@ -7,7 +7,6 @@ import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
-import static org.easymock.EasyMock.mock;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
