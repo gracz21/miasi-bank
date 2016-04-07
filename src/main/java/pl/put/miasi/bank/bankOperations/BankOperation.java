@@ -12,15 +12,15 @@ import java.util.Date;
 public abstract class BankOperation implements Comparable<BankOperation> {
     private static long idGlobal;
 
-    protected long id;
-    protected DateTime realisationDate;
-    protected String description;
-    protected BankProduct bankProduct;
+    private long id = idGlobal++;
+    private DateTime realisationDate;
+    private String description;
+    private BankProduct bankProduct;
 
     protected BankOperation(String description, BankProduct bankProduct) {
-        this.id = idGlobal++;
         this.description = description;
         this.bankProduct = bankProduct;
+        this.realisationDate = new DateTime();
     }
 
     public long getId() {

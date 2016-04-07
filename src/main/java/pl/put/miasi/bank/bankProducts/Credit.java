@@ -7,11 +7,10 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
  */
 public class Credit extends BankProduct {
     public Credit(double balance) {
-        super();
-        this.balance = balance;
+        super(balance);
     }
 
     public double calculateInstallment() {
-        return balance + interestMechanism.calculateInterest(this.balance);
+        return getBalance() + calculateInterest(getBalance());
     }
 }
