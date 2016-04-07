@@ -31,6 +31,9 @@ public abstract class BankProduct {
     public double getBalance() {
         return balance;
     }
+    public History getHistory() {
+        return history;
+    }
 
     public void setBalance(double balance) {
         this.balance = balance;

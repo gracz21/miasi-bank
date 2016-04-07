@@ -18,7 +18,7 @@ public abstract class BankProductOperationUtil {
         bankProduct.addBankOperation(interestMechanismChange);
     }
 
-    public static void reportCreation() {
-        //TODO
+    public static void createReport() {
+        //TODO tworzenie raportu
     }
 }

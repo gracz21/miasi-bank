@@ -3,12 +3,13 @@ package pl.put.miasi.bank.bankOperations;
 import org.joda.time.DateTime;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * @author Bartosz Skotarek
  */
-public abstract class BankOperation {
+public abstract class BankOperation implements Comparable<BankOperation> {
     private static long idGlobal;
 
     protected long id;
@@ -36,5 +37,10 @@ public abstract class BankOperation {
 
     public String getOperationName() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int compareTo(BankOperation o) {
+        return this.realisationDate.compareTo(o.getRealisationDate());
     }
 }

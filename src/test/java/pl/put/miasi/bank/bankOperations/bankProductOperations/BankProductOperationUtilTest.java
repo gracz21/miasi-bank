@@ -48,7 +48,7 @@ public class BankProductOperationUtilTest extends EasyMockSupport {
     }
 
     @Test
-    public void testcreaeteReport() throws Exception {
-        // TODO zrobic
+    public void testCreateReport() throws Exception {
+
     }
 }

@@ -1,8 +1,7 @@
 package pl.put.miasi.bank;
 
-import javafx.collections.transformation.SortedList;
 import pl.put.miasi.bank.bankOperations.BankOperation;
-
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +13,10 @@ public class History {
 
     public void addBankOperation(BankOperation bankOperation) {
         bankOperations.add(bankOperation);
-        //TODO sortowanie po czasie transakcji
+        Collections.sort(bankOperations);
+    }
+
+    public List<BankOperation> getBankOperations() {
+        return bankOperations;
     }
 }
