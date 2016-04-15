@@ -56,4 +56,9 @@ public abstract class BankProduct {
     public void setInterestMechanism(InterestMechanism interestMechanism) {
         this.interestMechanism = interestMechanism;
     }
+
+    public void doOperation(BankOperation bankOperation) throws Exception {
+        bankOperation.execute();
+        this.history.addBankOperation(bankOperation);
+    }
 }

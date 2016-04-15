@@ -2,6 +2,7 @@ package pl.put.miasi.bank.bankOperations;
 
 import org.joda.time.DateTime;
 import pl.put.miasi.bank.bankProducts.BankProduct;
+import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -15,11 +16,9 @@ public abstract class BankOperation implements Comparable<BankOperation> {
     private long id = idGlobal++;
     private DateTime realisationDate;
     private String description;
-    private BankProduct bankProduct;
 
-    protected BankOperation(String description, BankProduct bankProduct) {
+    protected BankOperation(String description) {
         this.description = description;
-        this.bankProduct = bankProduct;
         this.realisationDate = new DateTime();
     }
 
@@ -35,9 +34,9 @@ public abstract class BankOperation implements Comparable<BankOperation> {
         return description;
     }
 
-    public String getOperationName() {
-        throw new UnsupportedOperationException();
-    }
+    public abstract String getOperationName();
+
+    public abstract void execute() throws Exception;
 
     @Override
     public int compareTo(BankOperation o) {
