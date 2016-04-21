@@ -25,5 +25,6 @@ public class InterestCalculation extends BankOperation {
     public void execute() throws Exception {
         InterestMechanism currentInterestMechanism = bankProduct.getInterestMechanism();
         bankProduct.updateBalance(currentInterestMechanism.calculateInterest(bankProduct.getBalance()));
+        bankProduct.addBankOperation(this);
     }
 }

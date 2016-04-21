@@ -1,7 +1,5 @@
 package pl.put.miasi.bank.bankOperations.creditOperations;
 
-import static org.easymock.EasyMock.*;
-
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,18 +9,15 @@ import pl.put.miasi.bank.bankProducts.BankAccount;
 import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
-import java.security.InvalidParameterException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 /**
- * Created by inf109764 on 2016-04-01.
+ * @author Bartosz Skotarek
  */
-public class CreditOperationUtilTest extends EasyMockSupport {
+public class CreditInstallmentRepaymentTest extends EasyMockSupport {
     private BankAccount bankAccount;
     private InterestMechanism interestMechanism;
-    private double amount;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
@@ -31,34 +26,8 @@ public class CreditOperationUtilTest extends EasyMockSupport {
     }
 
     @Test
-    public void testTakeCredit() throws Exception {
-        amount = 1000.0;
-
-        bankAccount.updateBalance(eq(amount));
-        bankAccount.addBankOperation(isA(CreditTaking.class));
-        replayAll();
-
-        CreditOperationUtil.takeCredit("Wziecie kredytu", bankAccount, interestMechanism, amount);
-        verifyAll();
-    }
-
-    @Test
-    public void testTakeCreditInsufficientResources() throws Exception {
-        amount = -1000.0;
-
-        replayAll();
-
-        try {
-            CreditOperationUtil.takeCredit("Wziecie kredytu", bankAccount, interestMechanism, amount);
-            fail();
-        } catch (InvalidParameterException e) {
-            verifyAll();
-        }
-    }
-
-    @Test
-    public void testCreditInstallmentRepayment() throws Exception {
-        amount = 1000.0;
+    public void execute() throws Exception {
+        double amount = 1000.0;
         double interest = 100.0;
         Credit credit = new Credit(amount);
 
@@ -71,8 +40,11 @@ public class CreditOperationUtilTest extends EasyMockSupport {
 
         credit.setInterestMechanism(interestMechanism);
 
-        CreditOperationUtil.creditInstallmentRepayment("Oplata raty", bankAccount, credit);
+        CreditInstallmentRepayment creditInstallmentRepayment = new CreditInstallmentRepayment("Test", bankAccount, credit);
+        creditInstallmentRepayment.execute();
+
         assertEquals(credit.getBalance(), 0.0, 0.0);
         verifyAll();
     }
+
 }

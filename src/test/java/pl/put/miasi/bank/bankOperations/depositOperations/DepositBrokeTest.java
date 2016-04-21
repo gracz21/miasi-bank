@@ -9,8 +9,6 @@ import pl.put.miasi.bank.bankProducts.BankAccount;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
-import java.security.InvalidParameterException;
-
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.isA;
 import static org.junit.Assert.*;
@@ -18,10 +16,9 @@ import static org.junit.Assert.*;
 /**
  * @author Bartosz Skotarek
  */
-public class DepositOperationUtilTest extends EasyMockSupport {
+public class DepositBrokeTest extends EasyMockSupport {
     private BankAccount bankAccount;
     private InterestMechanism interestMechanism;
-    private double amount;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
@@ -30,48 +27,22 @@ public class DepositOperationUtilTest extends EasyMockSupport {
     }
 
     @Test
-    public void depositAssumption() throws Exception {
-        amount = 1000.0;
-
-        bankAccount.updateBalance(eq(-amount));
-        bankAccount.addBankOperation(isA(DepositAssumption.class));
-        replayAll();
-
-        DepositOperationUtil.depositAssumption("Zalozenie konta debetowego", bankAccount, interestMechanism, amount);
-        verifyAll();
-    }
-
-    @Test
-    public void depositAssumptionInsufficientResources() throws Exception {
-        amount = -1000.0;
-
-        replayAll();
-
-        try {
-            DepositOperationUtil.depositAssumption("Zalozenie konta debetowego", bankAccount, interestMechanism, amount);
-            fail();
-        } catch (InvalidParameterException e) {
-            verifyAll();
-        }
-    }
-
-
-    @Test
-    public void depositBroke() throws Exception {
-        amount = 1000.0;
-        double interest = 100.0;
+    public void execute() throws Exception {
+        double amount = 1000.0;
 
         bankAccount.updateBalance(eq(amount));
         bankAccount.addBankOperation(isA(DepositBroke.class));
+        bankAccount.removeDeposit(isA(Deposit.class));
 
         replayAll();
 
         Deposit deposit = new Deposit(amount);
         deposit.setInterestMechanism(interestMechanism);
 
-        DepositOperationUtil.depositBroke("Zamkniecie konta debetowego", bankAccount, deposit);
+        DepositBroke depositBroke = new DepositBroke("Test", bankAccount, deposit);
+        depositBroke.execute();
 
-        assertEquals(deposit.getBalance(), 0.0, 0.0);
+        assertEquals(deposit.getBalance(), 1000, 0.0);
         verifyAll();
     }
 

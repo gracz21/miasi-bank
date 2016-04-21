@@ -34,6 +34,7 @@ public class Withdrawal extends BankOperation {
 
         if(!this.executed) {
             bankAccount.updateBalance(-this.amount);
+            bankAccount.addBankOperation(this);
             this.executed = true;
         } else {
             throw new UnsupportedOperationException("Operation already executed");

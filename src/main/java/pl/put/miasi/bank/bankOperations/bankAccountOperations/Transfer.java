@@ -38,6 +38,9 @@ public class Transfer extends BankOperation {
             sourceBankAccount.updateBalance(-this.amount);
             targetBankAccount.updateBalance(this.amount);
 
+            sourceBankAccount.addBankOperation(this);
+            targetBankAccount.addBankOperation(this);
+
             this.executed = true;
         } else {
             throw new UnsupportedOperationException("Operation already executed");

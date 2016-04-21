@@ -1,6 +1,6 @@
 package pl.put.miasi.bank.bankOperations.bankProductOperations;
 
-import static org.easymock.EasyMock.*;
+import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,15 @@ import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
-public class BankProductOperationUtilTest extends EasyMockSupport {
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isA;
+import static org.junit.Assert.*;
+
+/**
+ * @author Bartosz Skotarek
+ */
+public class InterestCalculationTest extends EasyMockSupport {
     private BankProduct bankProduct;
     private InterestMechanism interestMechanism;
 
@@ -20,7 +28,7 @@ public class BankProductOperationUtilTest extends EasyMockSupport {
     }
 
     @Test
-    public void testCalculateInterest() throws InterestRateException, BalanceException {
+    public void execute() throws Exception {
         double balance = 1000.0;
         double interest = 100.0;
 
@@ -33,22 +41,10 @@ public class BankProductOperationUtilTest extends EasyMockSupport {
 
         replayAll();
 
-        BankProductOperationUtil.calculateInterest("Obliczenie odsetek", bankProduct);
+        InterestCalculation interestCalculation = new InterestCalculation("Test", bankProduct);
+        interestCalculation.execute();
+
         verifyAll();
     }
 
-    @Test
-    public void testChangeInterestMechanism() throws Exception {
-        bankProduct.setInterestMechanism(interestMechanism);
-        bankProduct.addBankOperation(isA(InterestMechanismChange.class));
-        replayAll();
-
-        BankProductOperationUtil.changeInterestMechanism("Test", bankProduct, interestMechanism);
-        verifyAll();
-    }
-
-    @Test
-    public void testCreateReport() throws Exception {
-
-    }
 }
