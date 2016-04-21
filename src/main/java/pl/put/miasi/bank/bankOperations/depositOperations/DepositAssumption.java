@@ -15,7 +15,7 @@ public class DepositAssumption extends BankOperation {
     private BankAccount bankAccount;
     private InterestMechanism interestMechanism;
 
-    protected DepositAssumption(String description, BankAccount bankAccount, double depositAmount, InterestMechanism interestMechanism) {
+    public DepositAssumption(String description, BankAccount bankAccount, double depositAmount, InterestMechanism interestMechanism) {
         super(description);
         this.bankAccount = bankAccount;
         this.depositAmount = depositAmount;

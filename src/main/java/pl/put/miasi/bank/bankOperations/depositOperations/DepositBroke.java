@@ -11,7 +11,7 @@ public class DepositBroke extends BankOperation {
     private BankAccount bankAccount;
     private Deposit deposit;
 
-    protected DepositBroke(String description, BankAccount bankAccount, Deposit deposit) {
+    public DepositBroke(String description, BankAccount bankAccount, Deposit deposit) {
         super(description);
         this.bankAccount = bankAccount;
         this.deposit = deposit;
