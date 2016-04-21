@@ -27,7 +27,7 @@ public class Bank {
         List<BankOperation> globalHistory = new LinkedList<BankOperation>();
         for (Client client: clients)
             for (BankProduct bankProduct: client.getBankProducts())
-                globalHistory.addAll(bankProduct.getHistory().getBankOperations().stream().collect(Collectors.toList()));
+                globalHistory.addAll(bankProduct.getHistory().getBankOperations());
 
         Collections.sort(globalHistory);
         return globalHistory;

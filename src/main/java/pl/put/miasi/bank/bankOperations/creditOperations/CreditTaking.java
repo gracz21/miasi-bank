@@ -24,7 +24,7 @@ public class CreditTaking extends BankOperation {
 
     @Override
     public String getOperationName() {
-        return null;
+        return "Credit taking";
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ReportCreation extends BankOperation {
 
     @Override
     public String getOperationName() {
-        return null;
+        return "Report creation";
     }
 
     @Override

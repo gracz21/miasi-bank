@@ -19,7 +19,7 @@ public class InterestMechanismChange extends BankOperation {
 
     @Override
     public String getOperationName() {
-        return null;
+        return "Interest mechanism change";
     }
 
     @Override

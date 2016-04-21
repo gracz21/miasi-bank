@@ -18,7 +18,7 @@ public class InterestCalculation extends BankOperation {
 
     @Override
     public String getOperationName() {
-        return null;
+        return "Interest calculation";
     }
 
     @Override

@@ -5,18 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
-import pl.put.miasi.bank.bankOperations.creditOperations.CreditInstallmentRepayment;
-import pl.put.miasi.bank.bankOperations.creditOperations.CreditOperationUtil;
-import pl.put.miasi.bank.bankOperations.creditOperations.CreditTaking;
 import pl.put.miasi.bank.bankProducts.BankAccount;
-import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.security.InvalidParameterException;
 
 import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.isA;
 import static org.junit.Assert.*;
 
