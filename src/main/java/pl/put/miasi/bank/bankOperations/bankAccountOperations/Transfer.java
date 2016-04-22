@@ -30,20 +30,20 @@ public class Transfer extends BankOperation {
 
     @Override
     public void execute() throws Exception {
-        if(this.amount < 0) {
-            throw new InvalidParameterException("Amount is negative");
-        }
-
-        if(!this.executed) {
-            sourceBankAccount.updateBalance(-this.amount);
-            targetBankAccount.updateBalance(this.amount);
-
-            sourceBankAccount.addBankOperation(this);
-            targetBankAccount.addBankOperation(this);
-
-            this.executed = true;
-        } else {
-            throw new UnsupportedOperationException("Operation already executed");
-        }
+//        if(this.amount < 0) {
+//            throw new InvalidParameterException("Amount is negative");
+//        }
+//
+//        if(!this.executed) {
+//            sourceBankAccount.updateBalance(-this.amount);
+//            targetBankAccount.updateBalance(this.amount);
+//
+//            sourceBankAccount.addBankOperation(this);
+//            targetBankAccount.addBankOperation(this);
+//
+//            this.executed = true;
+//        } else {
+//            throw new UnsupportedOperationException("Operation already executed");
+//        }
     }
 }

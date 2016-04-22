@@ -16,7 +16,7 @@ public abstract class BankProduct {
     private long id = idGlobal++;
     private History history = new History();
     private InterestMechanism interestMechanism;
-    private double balance;
+    protected double balance;
 
     public BankProduct(double balance) {
         this.balance = balance;
@@ -35,14 +35,6 @@ public abstract class BankProduct {
 
     public void setBalance(double balance) {
         this.balance = balance;
-    }
-
-    public void updateBalance(double amount) throws BalanceException {
-        if(this.balance + amount >= 0) {
-            this.balance += amount;
-        } else {
-            throw new BalanceException("Insufficient balance");
-        }
     }
 
     public double calculateInterest(double amount) {

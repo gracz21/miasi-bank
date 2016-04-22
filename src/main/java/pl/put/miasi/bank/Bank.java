@@ -11,10 +11,7 @@ import pl.put.miasi.bank.bankOperations.creditOperations.CreditInstallmentRepaym
 import pl.put.miasi.bank.bankOperations.creditOperations.CreditTaking;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositAssumption;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositBroke;
-import pl.put.miasi.bank.bankProducts.BankAccount;
-import pl.put.miasi.bank.bankProducts.BankProduct;
-import pl.put.miasi.bank.bankProducts.Credit;
-import pl.put.miasi.bank.bankProducts.Deposit;
+import pl.put.miasi.bank.bankProducts.*;
 import pl.put.miasi.bank.reports.Report;
 
 import java.util.Collections;

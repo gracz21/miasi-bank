@@ -28,16 +28,16 @@ public class Withdrawal extends BankOperation {
 
     @Override
     public void execute() throws Exception {
-        if(this.amount < 0) {
-            throw new InvalidParameterException("Amount is negative");
-        }
-
-        if(!this.executed) {
-            bankAccount.updateBalance(-this.amount);
-            bankAccount.addBankOperation(this);
-            this.executed = true;
-        } else {
-            throw new UnsupportedOperationException("Operation already executed");
-        }
+//        if(this.amount < 0) {
+//            throw new InvalidParameterException("Amount is negative");
+//        }
+//
+//        if(!this.executed) {
+//            bankAccount.updateBalance(-this.amount);
+//            bankAccount.addBankOperation(this);
+//            this.executed = true;
+//        } else {
+//            throw new UnsupportedOperationException("Operation already executed");
+//        }
     }
 }

@@ -29,13 +29,13 @@ public class DepositAssumption extends BankOperation {
 
     @Override
     public void execute() throws Exception {
-        if (depositAmount < 0) {
-            throw new InvalidParameterException("Deposit amount is negative");
-        }
-
-        Deposit deposit = new Deposit(depositAmount);
-        bankAccount.updateBalance(-depositAmount);
-        deposit.setInterestMechanism(interestMechanism);
-        bankAccount.addDeposit(deposit);
+//        if (depositAmount < 0) {
+//            throw new InvalidParameterException("Deposit amount is negative");
+//        }
+//
+//        Deposit deposit = new Deposit(depositAmount);
+//        bankAccount.updateBalance(-depositAmount);
+//        deposit.setInterestMechanism(interestMechanism);
+//        bankAccount.addDeposit(deposit);
     }
 }
