@@ -5,6 +5,8 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import static org.junit.Assert.*;

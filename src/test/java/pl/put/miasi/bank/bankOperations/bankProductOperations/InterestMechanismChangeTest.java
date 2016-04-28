@@ -27,7 +27,6 @@ public class InterestMechanismChangeTest extends EasyMockSupport {
     @Test
     public void execute() throws Exception {
         bankProduct.setInterestMechanism(interestMechanism);
-        //bankProduct.addBankOperation(isA(InterestMechanismChange.class));
         replayAll();
 
         InterestMechanismChange interestMechanismChange = new InterestMechanismChange("Test", interestMechanism, bankProduct);
