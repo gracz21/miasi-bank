@@ -25,6 +25,7 @@ public class DepositBroke extends BankOperation {
 
     @Override
     public void execute() throws Exception {
+        super.execute();
         bankAccount.payment(deposit.getBalance());
         bankAccount.removeDeposit(deposit);
     }

@@ -13,7 +13,6 @@ import java.security.InvalidParameterException;
 public class Payment extends BankOperation {
     private BankAccountInterface bankAccount;
     private double amount;
-    private boolean executed;
 
     public Payment(String description, BankAccountInterface bankAccount, double amount) {
         super(description);
@@ -28,16 +27,12 @@ public class Payment extends BankOperation {
     }
 
     @Override
-    public void execute() throws BalanceException {
+    public void execute() throws Exception {
         if(this.amount < 0) {
             throw new InvalidParameterException("Amount is negative");
         }
 
-        if(!this.executed) {
-            bankAccount.payment(this.amount);
-            this.executed = true;
-        } else {
-            throw new UnsupportedOperationException("Operation already executed");
-        }
+        super.execute();
+        bankAccount.payment(this.amount);
     }
 }

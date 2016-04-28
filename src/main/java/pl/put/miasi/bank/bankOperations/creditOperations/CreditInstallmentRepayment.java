@@ -25,6 +25,7 @@ public class CreditInstallmentRepayment extends BankOperation {
 
     @Override
     public void execute() throws Exception {
+        super.execute();
         double installment = credit.calculateInstallment();
         bankAccount.withdraw(installment);
         credit.setBalance(0.0);

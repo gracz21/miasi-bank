@@ -13,9 +13,10 @@ import java.util.Date;
 public abstract class BankOperation implements Comparable<BankOperation> {
     private static long idGlobal;
 
-    private long id = idGlobal++;
-    private DateTime realisationDate;
-    private String description;
+    protected long id = idGlobal++;
+    protected DateTime realisationDate;
+    protected String description;
+    protected boolean executed;
 
     protected BankOperation(String description) {
         this.description = description;
@@ -36,7 +37,13 @@ public abstract class BankOperation implements Comparable<BankOperation> {
 
     public abstract String getOperationName();
 
-    public abstract void execute() throws Exception;
+    public void execute() throws Exception {
+        if(!executed) {
+            executed = true;
+        } else {
+            throw new UnsupportedOperationException("Operation already executed");
+        }
+    }
 
     @Override
     public int compareTo(BankOperation o) {

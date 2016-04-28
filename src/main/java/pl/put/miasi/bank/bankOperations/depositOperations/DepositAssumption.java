@@ -34,6 +34,7 @@ public class DepositAssumption extends BankOperation {
             throw new InvalidParameterException("Deposit amount is negative");
         }
 
+        super.execute();
         Deposit deposit = new Deposit(depositAmount);
         bankAccount.withdraw(depositAmount);
         deposit.setInterestMechanism(interestMechanism);

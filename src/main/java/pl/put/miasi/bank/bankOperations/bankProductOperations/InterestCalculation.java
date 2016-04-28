@@ -23,6 +23,7 @@ public class InterestCalculation extends BankOperation {
 
     @Override
     public void execute() throws Exception {
+        super.execute();
 //        InterestMechanism currentInterestMechanism = bankProduct.getInterestMechanism();
 //        bankProduct.updateBalance(currentInterestMechanism.calculateInterest(bankProduct.getBalance()));
 //        bankProduct.addBankOperation(this);

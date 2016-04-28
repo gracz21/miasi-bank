@@ -12,7 +12,6 @@ import java.security.InvalidParameterException;
 public class Withdrawal extends BankOperation {
     private BankAccountInterface bankAccount;
     private double amount;
-    private boolean executed;
 
     public Withdrawal(String description, BankAccountInterface bankAccount, double amount) {
         super(description);
@@ -32,11 +31,8 @@ public class Withdrawal extends BankOperation {
             throw new InvalidParameterException("Amount is negative");
         }
 
-        if(!this.executed) {
-            bankAccount.withdraw(this.amount);
-            this.executed = true;
-        } else {
-            throw new UnsupportedOperationException("Operation already executed");
-        }
+        super.execute();
+        bankAccount.withdraw(this.amount);
+
     }
 }

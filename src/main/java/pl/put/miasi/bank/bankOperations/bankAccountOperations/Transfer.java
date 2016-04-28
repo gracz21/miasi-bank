@@ -11,7 +11,6 @@ public class Transfer extends BankOperation {
     private BankAccountInterface sourceBankAccount;
     private BankAccountInterface targetBankAccount;
     private double amount;
-    private boolean executed;
 
     public Transfer(String description, BankAccountInterface sourceBankAccount, BankAccountInterface targetBankAccount,
                     double amount) {
@@ -29,16 +28,12 @@ public class Transfer extends BankOperation {
 
     @Override
     public void execute() throws Exception {
-        if(!this.executed) {
-            if(this.amount < 0) {
-                sourceBankAccount.withdraw(-this.amount);
-            } else {
-                targetBankAccount.payment(this.amount);
-            }
+        super.execute();
 
-            this.executed = true;
+        if(this.amount < 0) {
+            sourceBankAccount.withdraw(-this.amount);
         } else {
-            throw new UnsupportedOperationException("Operation already executed");
+            targetBankAccount.payment(this.amount);
         }
     }
 }

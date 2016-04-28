@@ -24,6 +24,7 @@ public class InterestMechanismChange extends BankOperation {
 
     @Override
     public void execute() throws Exception {
+        super.execute();
         if(interestMechanism != null) {
             bankProduct.setInterestMechanism(interestMechanism);
         }

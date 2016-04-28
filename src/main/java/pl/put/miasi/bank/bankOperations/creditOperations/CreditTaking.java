@@ -34,6 +34,7 @@ public class CreditTaking extends BankOperation {
             throw new InvalidParameterException("Credit amount is negative");
         }
 
+        super.execute();
         Credit credit = new Credit(amount);
         bankAccount.payment(amount);
         credit.setInterestMechanism(interestMechanism);
