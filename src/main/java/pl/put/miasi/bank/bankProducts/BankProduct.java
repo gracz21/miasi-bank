@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * @author Kamil Walkowiak
  */
-public abstract class BankProduct {
+public abstract class BankProduct implements DoOperationInterface {
     private static long idGlobal;
 
     private long id = idGlobal++;
@@ -49,6 +49,7 @@ public abstract class BankProduct {
         this.interestMechanism = interestMechanism;
     }
 
+    @Override
     public void doOperation(BankOperation bankOperation) throws Exception {
         bankOperation.execute();
         this.history.addBankOperation(bankOperation);

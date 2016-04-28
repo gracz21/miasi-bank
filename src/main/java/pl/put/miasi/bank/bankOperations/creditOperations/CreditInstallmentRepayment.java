@@ -1,17 +1,18 @@
 package pl.put.miasi.bank.bankOperations.creditOperations;
 
 import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.Credit;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
 
 /**
  * Spłata raty kredytu
  */
 public class CreditInstallmentRepayment extends BankOperation {
     private Credit credit;
-    private BankAccount bankAccount;
+    private BankAccountInterface bankAccount;
 
-    public CreditInstallmentRepayment(String description, BankAccount bankAccount, Credit credit) {
+    public CreditInstallmentRepayment(String description, BankAccountInterface bankAccount, Credit credit) {
         super(description);
         this.credit = credit;
         this.bankAccount = bankAccount;
@@ -24,8 +25,8 @@ public class CreditInstallmentRepayment extends BankOperation {
 
     @Override
     public void execute() throws Exception {
-//        double installment = credit.calculateInstallment();
-//        bankAccount.updateBalance(-installment);
-//        credit.setBalance(0.0);
+        double installment = credit.calculateInstallment();
+        bankAccount.withdraw(installment);
+        credit.setBalance(0.0);
     }
 }

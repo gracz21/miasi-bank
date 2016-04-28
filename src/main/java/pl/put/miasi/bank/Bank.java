@@ -12,12 +12,13 @@ import pl.put.miasi.bank.bankOperations.creditOperations.CreditTaking;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositAssumption;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositBroke;
 import pl.put.miasi.bank.bankProducts.*;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
 import pl.put.miasi.bank.reports.Report;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Bartosz Skotarek
@@ -39,18 +40,19 @@ public class Bank {
         return globalHistory;
     }
 
-    public void payment(BankAccount bankAccount, double amount, String description) throws Exception {
+    public void payment(BankAccountInterface bankAccount, double amount, String description) throws Exception {
         bankAccount.doOperation(new Payment(description, bankAccount, amount));
     }
 
-    public void withdrawal(BankAccount bankAccount, double amount, String description) throws Exception {
+    public void withdrawal(BankAccountInterface bankAccount, double amount, String description) throws Exception {
         bankAccount.doOperation(new Withdrawal(description, bankAccount, amount));
     }
 
-    public void transfer(BankAccount sourceBankAccount, BankAccount targetBankAccount, double amount, String description) throws Exception {
-        Transfer transfer = new Transfer(description, sourceBankAccount, targetBankAccount, amount);
-        sourceBankAccount.doOperation(transfer);
-        targetBankAccount.doOperation(transfer);
+    public void transfer(BankAccountInterface sourceBankAccount, BankAccountInterface targetBankAccount, double amount, String description) throws Exception {
+        Transfer sourceTransfer = new Transfer(description, sourceBankAccount, targetBankAccount, -amount);
+        Transfer targetTransfer = new Transfer(description, sourceBankAccount, targetBankAccount, amount);
+        sourceBankAccount.doOperation(sourceTransfer);
+        targetBankAccount.doOperation(targetTransfer);
     }
 
     public void interestCalculation(BankProduct bankProduct, String description) throws Exception {
@@ -65,7 +67,7 @@ public class Bank {
         bankAccount.doOperation(new CreditInstallmentRepayment(description, bankAccount, credit));
     }
 
-    public void creditTaking(double amount, BankAccount bankAccount, InterestMechanism interestMechanism, String description) throws Exception {
+    public void creditTaking(double amount, BankAccountInterface bankAccount, InterestMechanism interestMechanism, String description) throws Exception {
         bankAccount.doOperation(new CreditTaking(description, amount, bankAccount, interestMechanism));
     }
 

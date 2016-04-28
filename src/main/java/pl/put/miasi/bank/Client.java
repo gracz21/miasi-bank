@@ -1,9 +1,7 @@
 package pl.put.miasi.bank;
 
-import pl.put.miasi.bank.bankProducts.BankAccount;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

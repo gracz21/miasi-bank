@@ -1,16 +1,12 @@
-package pl.put.miasi.bank.bankProducts;
+package pl.put.miasi.bank.bankProducts.bankAccount;
 
 import org.joda.time.DateTime;
-import pl.put.miasi.bank.Client;
-import pl.put.miasi.bank.History;
-import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
-import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
+import pl.put.miasi.bank.bankProducts.BankProduct;
+import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

@@ -1,6 +1,8 @@
-package pl.put.miasi.bank.bankProducts;
+package pl.put.miasi.bank.bankProducts.bankAccount;
 
 import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
+import pl.put.miasi.bank.bankOperations.BankOperation;
+import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.security.InvalidParameterException;
@@ -61,7 +63,22 @@ public class BankAccountDecorator implements BankAccountInterface {
         }
     }
 
+    @Override
+    public void addDeposit(Deposit deposit) {
+        bankAccount.addDeposit(deposit);
+    }
+
+    @Override
+    public void removeDeposit(Deposit deposit) {
+        bankAccount.removeDeposit(deposit);
+    }
+
     public double getDebitValue() {
         return debitValue;
+    }
+
+    @Override
+    public void doOperation(BankOperation bankOperation) throws Exception {
+        bankAccount.doOperation(bankOperation);
     }
 }

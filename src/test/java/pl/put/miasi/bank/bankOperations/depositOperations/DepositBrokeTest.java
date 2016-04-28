@@ -5,13 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
-import pl.put.miasi.bank.bankProducts.BankAccount;
-import pl.put.miasi.bank.bankProducts.Deposit;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.isA;
-import static org.junit.Assert.*;
 
 /**
  * @author Bartosz Skotarek
