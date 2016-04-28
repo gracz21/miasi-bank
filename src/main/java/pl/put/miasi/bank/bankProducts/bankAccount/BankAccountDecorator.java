@@ -2,6 +2,7 @@ package pl.put.miasi.bank.bankProducts.bankAccount;
 
 import pl.put.miasi.bank.bankMechanisms.DebitMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
+import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
@@ -71,6 +72,16 @@ public class BankAccountDecorator implements BankAccountInterface {
     @Override
     public void removeDeposit(Deposit deposit) {
         bankAccount.removeDeposit(deposit);
+    }
+
+    @Override
+    public void addCredit(Credit credit) {
+        bankAccount.addCredit(credit);
+    }
+
+    @Override
+    public void removeCredit(Credit credit) {
+        bankAccount.removeCredit(credit);
     }
 
     public double getDebitValue() {

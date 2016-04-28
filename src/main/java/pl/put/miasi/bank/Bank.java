@@ -24,8 +24,14 @@ import java.util.List;
  * @author Bartosz Skotarek
  */
 public class Bank {
+    private BankMediator bankMediator;
     private List<Client> clients;
     private List<Report> reports;
+
+    public Bank() {
+        bankMediator = BankMediator.getInstance();
+        bankMediator.addBank(this);
+    }
 
     public void addClient(Client client) {
         clients.add(client);
@@ -38,6 +44,10 @@ public class Bank {
 
         Collections.sort(globalHistory);
         return globalHistory;
+    }
+
+    List<Client> getClients() {
+        return clients;
     }
 
     public void payment(BankAccountInterface bankAccount, double amount, String description) throws Exception {

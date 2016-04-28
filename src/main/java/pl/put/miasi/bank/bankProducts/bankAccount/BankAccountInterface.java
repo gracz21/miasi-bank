@@ -1,5 +1,6 @@
 package pl.put.miasi.bank.bankProducts.bankAccount;
 
+import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.DoOperationInterface;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
@@ -12,4 +13,6 @@ public interface BankAccountInterface extends DoOperationInterface {
     void payment(double amount) throws BalanceException;
     void addDeposit(Deposit deposit);
     void removeDeposit(Deposit deposit);
+    void addCredit(Credit credit);
+    void removeCredit(Credit credit);
 }

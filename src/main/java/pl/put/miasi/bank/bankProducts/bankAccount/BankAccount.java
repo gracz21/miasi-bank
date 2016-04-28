@@ -2,6 +2,7 @@ package pl.put.miasi.bank.bankProducts.bankAccount;
 
 import org.joda.time.DateTime;
 import pl.put.miasi.bank.bankProducts.BankProduct;
+import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
@@ -15,10 +16,12 @@ import java.util.List;
 public class BankAccount extends BankProduct implements BankAccountInterface {
     private DateTime dateOfCreation = new DateTime();
     private List<Deposit> deposits;
+    private List<Credit> credits;
 
     public BankAccount() {
         super(0);
         this.deposits = new ArrayList<Deposit>();
+        this.credits = new ArrayList<Credit>();
     }
 
     public DateTime getDateOfCreation() {
@@ -31,6 +34,16 @@ public class BankAccount extends BankProduct implements BankAccountInterface {
 
     public void removeDeposit(Deposit deposit) {
         this.deposits.remove(deposit);
+    }
+
+    @Override
+    public void addCredit(Credit credit) {
+        this.credits.add(credit);
+    }
+
+    @Override
+    public void removeCredit(Credit credit) {
+        this.credits.remove(credit);
     }
 
     @Override
