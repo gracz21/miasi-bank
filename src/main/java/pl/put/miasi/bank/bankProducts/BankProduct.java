@@ -3,15 +3,12 @@ package pl.put.miasi.bank.bankProducts;
 import pl.put.miasi.bank.History;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 import pl.put.miasi.bank.reports.Report;
-
-import java.util.UUID;
 
 /**
  * @author Kamil Walkowiak
  */
-public abstract class BankProduct implements DoOperationInterface {
+public abstract class BankProduct {
     private static long idGlobal;
 
     private long id = idGlobal++;
@@ -50,7 +47,6 @@ public abstract class BankProduct implements DoOperationInterface {
         this.interestMechanism = interestMechanism;
     }
 
-    @Override
     public void doOperation(BankOperation bankOperation) throws Exception {
         bankOperation.execute();
         this.history.addBankOperation(bankOperation);

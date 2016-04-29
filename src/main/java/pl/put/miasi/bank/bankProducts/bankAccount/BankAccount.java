@@ -1,9 +1,11 @@
 package pl.put.miasi.bank.bankProducts.bankAccount;
 
 import org.joda.time.DateTime;
+import pl.put.miasi.bank.bankProducts.BankProduct;
 import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
+import pl.put.miasi.bank.reports.Report;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -61,5 +63,10 @@ public class BankAccount extends BankAccountDecorator {
         } else {
             throw new InvalidParameterException("Negative amount");
         }
+    }
+
+    @Override
+    public BankProduct accept(Report report) {
+        return report.visit(this);
     }
 }

@@ -3,7 +3,6 @@ package pl.put.miasi.bank.bankProducts.bankAccount;
 import pl.put.miasi.bank.bankProducts.BankProduct;
 import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
-import pl.put.miasi.bank.bankProducts.DoOperationInterface;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 /**
