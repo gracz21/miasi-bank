@@ -4,6 +4,7 @@ import pl.put.miasi.bank.History;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
+import pl.put.miasi.bank.reports.Report;
 
 import java.util.UUID;
 
@@ -54,4 +55,6 @@ public abstract class BankProduct implements DoOperationInterface {
         bankOperation.execute();
         this.history.addBankOperation(bankOperation);
     }
+
+    public abstract BankProduct accept(Report report);
 }
