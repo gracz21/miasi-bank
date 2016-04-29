@@ -12,8 +12,8 @@ import pl.put.miasi.bank.bankOperations.creditOperations.CreditTaking;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositAssumption;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositBroke;
 import pl.put.miasi.bank.bankProducts.*;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
 import pl.put.miasi.bank.reports.Report;
 
 import java.util.ArrayList;
@@ -51,19 +51,19 @@ public class Bank {
         return Collections.unmodifiableList(bankProducts);
     }
 
-    public void payment(BankAccountInterface bankAccount, double amount, String description) throws Exception {
-        bankAccount.doOperation(new Payment(description, bankAccount, amount));
+    public void payment(BankAccountDecorator bankAccountDecorator, double amount, String description) throws Exception {
+        bankAccountDecorator.doOperation(new Payment(description, bankAccountDecorator, amount));
     }
 
-    public void withdrawal(BankAccountInterface bankAccount, double amount, String description) throws Exception {
-        bankAccount.doOperation(new Withdrawal(description, bankAccount, amount));
+    public void withdrawal(BankAccountDecorator bankAccountDecorator, double amount, String description) throws Exception {
+        bankAccountDecorator.doOperation(new Withdrawal(description, bankAccountDecorator, amount));
     }
 
-    public void transfer(BankAccountInterface sourceBankAccount, BankAccountInterface targetBankAccount, double amount, String description) throws Exception {
-        Transfer sourceTransfer = new Transfer(description, sourceBankAccount, targetBankAccount, -amount);
-        Transfer targetTransfer = new Transfer(description, sourceBankAccount, targetBankAccount, amount);
-        sourceBankAccount.doOperation(sourceTransfer);
-        targetBankAccount.doOperation(targetTransfer);
+    public void transfer(BankAccountDecorator sourceBankAccountDecorator, BankAccountDecorator targetBankAccountDecorator, double amount, String description) throws Exception {
+        Transfer sourceTransfer = new Transfer(description, sourceBankAccountDecorator, targetBankAccountDecorator, -amount);
+        Transfer targetTransfer = new Transfer(description, sourceBankAccountDecorator, targetBankAccountDecorator, amount);
+        sourceBankAccountDecorator.doOperation(sourceTransfer);
+        targetBankAccountDecorator.doOperation(targetTransfer);
     }
 
     public void interestCalculation(BankProduct bankProduct, String description) throws Exception {
@@ -74,20 +74,20 @@ public class Bank {
         bankProduct.doOperation(new InterestMechanismChange(description, interestMechanism, bankProduct));
     }
 
-    public void creditInstallmentRepayment(BankAccount bankAccount, Credit credit, String description) throws Exception {
-        bankAccount.doOperation(new CreditInstallmentRepayment(description, bankAccount, credit));
+    public void creditInstallmentRepayment(BankAccount bankAccountImpl, Credit credit, String description) throws Exception {
+        bankAccountImpl.doOperation(new CreditInstallmentRepayment(description, bankAccountImpl, credit));
     }
 
-    public void creditTaking(double amount, BankAccountInterface bankAccount, InterestMechanism interestMechanism, String description) throws Exception {
-        bankAccount.doOperation(new CreditTaking(description, amount, bankAccount, interestMechanism));
+    public void creditTaking(double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism, String description) throws Exception {
+        bankAccountDecorator.doOperation(new CreditTaking(description, amount, bankAccountDecorator, interestMechanism));
     }
 
-    public void depositAssumption(BankAccount bankAccount, double depositAmount, InterestMechanism interestMechanism, String description) throws Exception {
-        bankAccount.doOperation(new DepositAssumption(description, bankAccount, depositAmount, interestMechanism));
+    public void depositAssumption(BankAccount bankAccountImpl, double depositAmount, InterestMechanism interestMechanism, String description) throws Exception {
+        bankAccountImpl.doOperation(new DepositAssumption(description, bankAccountImpl, depositAmount, interestMechanism));
     }
 
-    public void depositBroke(BankAccount bankAccount, Deposit deposit, String description) throws Exception {
-        bankAccount.doOperation(new DepositBroke(description, bankAccount, deposit));
+    public void depositBroke(BankAccount bankAccountImpl, Deposit deposit, String description) throws Exception {
+        bankAccountImpl.doOperation(new DepositBroke(description, bankAccountImpl, deposit));
     }
 
     public List<BankProduct> doReport(Report report) {

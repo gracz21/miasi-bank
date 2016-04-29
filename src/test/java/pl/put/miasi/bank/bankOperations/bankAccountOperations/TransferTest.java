@@ -11,14 +11,14 @@ import static org.easymock.EasyMock.eq;
  * Created by inf109714 on 2016-04-15.
  */
 public class TransferTest extends EasyMockSupport {
-    private BankAccount sourceBankAccount;
-    private BankAccount targetBankAccount;
+    private BankAccount sourceBankAccountImpl;
+    private BankAccount targetBankAccountImpl;
     private Transfer transfer;
 
     @Before
     public void setup() {
-        sourceBankAccount = mock(BankAccount.class);
-        targetBankAccount = mock(BankAccount.class);
+        sourceBankAccountImpl = mock(BankAccount.class);
+        targetBankAccountImpl = mock(BankAccount.class);
     }
 
     @Test
@@ -29,10 +29,10 @@ public class TransferTest extends EasyMockSupport {
     @Test
     public void testExecute() throws Exception {
         double amount = 400;
-        targetBankAccount.payment(eq(amount));
+        targetBankAccountImpl.payment(eq(amount));
         replayAll();
 
-        transfer = new Transfer("Test transfer", sourceBankAccount, targetBankAccount, amount);
+        transfer = new Transfer("Test transfer", sourceBankAccountImpl, targetBankAccountImpl, amount);
         transfer.execute();
 
         verifyAll();
@@ -41,10 +41,10 @@ public class TransferTest extends EasyMockSupport {
     @Test
     public void testPaymentAmountNegative() throws Exception {
         double amount = -400;
-        sourceBankAccount.withdraw(eq(-amount));
+        sourceBankAccountImpl.withdraw(eq(-amount));
         replayAll();
 
-        transfer = new Transfer("Test transfer", sourceBankAccount, targetBankAccount, amount);
+        transfer = new Transfer("Test transfer", sourceBankAccountImpl, targetBankAccountImpl, amount);
         transfer.execute();
 
         verifyAll();

@@ -12,9 +12,9 @@ public class Over1000Report implements Report {
     private double limit = 1000;
 
     @Override
-    public BankProduct visit(BankAccount bankAccount) {
-        if(bankAccount.getBalance() > limit) {
-            return bankAccount;
+    public BankProduct visit(BankAccount bankAccountImpl) {
+        if(bankAccountImpl.getBalance() > limit) {
+            return bankAccountImpl;
         } else {
             return null;
         }

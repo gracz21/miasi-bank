@@ -1,8 +1,7 @@
 package pl.put.miasi.bank.bankOperations.bankAccountOperations;
 
 import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 import java.security.InvalidParameterException;
 
@@ -10,12 +9,12 @@ import java.security.InvalidParameterException;
  * Wyplata
  */
 public class Withdrawal extends BankOperation {
-    private BankAccountInterface bankAccount;
+    private BankAccountDecorator bankAccountDecorator;
     private double amount;
 
-    public Withdrawal(String description, BankAccountInterface bankAccount, double amount) {
+    public Withdrawal(String description, BankAccountDecorator bankAccountDecorator, double amount) {
         super(description);
-        this.bankAccount = bankAccount;
+        this.bankAccountDecorator = bankAccountDecorator;
         this.amount = amount;
         this.executed = false;
     }
@@ -32,7 +31,7 @@ public class Withdrawal extends BankOperation {
         }
 
         super.execute();
-        bankAccount.withdraw(this.amount);
+        bankAccountDecorator.withdraw(this.amount);
 
     }
 }

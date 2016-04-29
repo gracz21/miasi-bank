@@ -10,8 +10,8 @@ import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
  */
 public class PassAllReport implements Report {
     @Override
-    public BankProduct visit(BankAccount bankAccount) {
-        return bankAccount;
+    public BankProduct visit(BankAccount bankAccountImpl) {
+        return bankAccountImpl;
     }
 
     @Override

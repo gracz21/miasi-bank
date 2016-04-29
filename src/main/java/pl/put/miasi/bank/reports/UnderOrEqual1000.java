@@ -12,8 +12,8 @@ public class UnderOrEqual1000 implements Report {
     private int limit = 1000;
 
     @Override
-    public BankProduct visit(BankAccount bankAccount) {
-        if (bankAccount.getBalance() <= 1000) return bankAccount;
+    public BankProduct visit(BankAccount bankAccountImpl) {
+        if (bankAccountImpl.getBalance() <= 1000) return bankAccountImpl;
         return null;
     }
 

@@ -3,8 +3,7 @@ package pl.put.miasi.bank.bankOperations.creditOperations;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
 import pl.put.miasi.bank.bankProducts.Credit;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 import java.security.InvalidParameterException;
 
@@ -13,13 +12,13 @@ import java.security.InvalidParameterException;
  */
 public class CreditTaking extends BankOperation {
     private double amount;
-    private BankAccountInterface bankAccount;
+    private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
 
-    public CreditTaking(String description, double amount, BankAccountInterface bankAccount, InterestMechanism interestMechanism) {
+    public CreditTaking(String description, double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism) {
         super(description);
         this.amount = amount;
-        this.bankAccount = bankAccount;
+        this.bankAccountDecorator = bankAccountDecorator;
         this.interestMechanism = interestMechanism;
     }
 
@@ -36,7 +35,7 @@ public class CreditTaking extends BankOperation {
 
         super.execute();
         Credit credit = new Credit(amount);
-        bankAccount.payment(amount);
+        bankAccountDecorator.payment(amount);
         credit.setInterestMechanism(interestMechanism);
     }
 }

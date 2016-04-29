@@ -19,12 +19,12 @@ import static org.junit.Assert.fail;
  * @author Bartosz Skotarek
  */
 public class DepositAssumptionTest extends EasyMockSupport {
-    private BankAccount bankAccount;
+    private BankAccount bankAccountImpl;
     private InterestMechanism interestMechanism;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
-        bankAccount = mock(BankAccount.class);
+        bankAccountImpl = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
     }
 
@@ -32,12 +32,12 @@ public class DepositAssumptionTest extends EasyMockSupport {
     public void depositAssumption() throws Exception {
         double amount = 1000.0;
 
-        bankAccount.withdraw(eq(amount));
-        bankAccount.addDeposit(isA(Deposit.class));
+        bankAccountImpl.withdraw(eq(amount));
+        bankAccountImpl.addDeposit(isA(Deposit.class));
 
         replayAll();
 
-        DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccount, amount, interestMechanism);
+        DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccountImpl, amount, interestMechanism);
         depositAssumption.execute();
 
         verifyAll();
@@ -50,7 +50,7 @@ public class DepositAssumptionTest extends EasyMockSupport {
         replayAll();
 
         try {
-            DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccount, amount, interestMechanism);
+            DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccountImpl, amount, interestMechanism);
             depositAssumption.execute();
 
             fail();

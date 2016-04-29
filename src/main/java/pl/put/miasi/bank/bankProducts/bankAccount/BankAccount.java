@@ -1,7 +1,6 @@
 package pl.put.miasi.bank.bankProducts.bankAccount;
 
 import org.joda.time.DateTime;
-import pl.put.miasi.bank.bankProducts.BankProduct;
 import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * @author Bartosz Skotarek
  */
-public class BankAccount extends BankProduct implements BankAccountInterface {
+public class BankAccount extends BankAccountDecorator {
     private DateTime dateOfCreation = new DateTime();
     private List<Deposit> deposits;
     private List<Credit> credits;

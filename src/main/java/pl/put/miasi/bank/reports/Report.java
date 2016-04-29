@@ -5,14 +5,11 @@ import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Bartosz Skotarek
  */
 public interface Report {
-    BankProduct visit(BankAccount bankAccount);
+    BankProduct visit(BankAccount bankAccountImpl);
     BankProduct visit(Credit credit);
     BankProduct visit(Deposit deposit);
 //    protected List<BankProduct> bankProducts;

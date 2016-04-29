@@ -17,12 +17,12 @@ import static org.junit.Assert.assertEquals;
  * @author Bartosz Skotarek
  */
 public class DepositBrokeTest extends EasyMockSupport {
-    private BankAccount bankAccount;
+    private BankAccount bankAccountImpl;
     private InterestMechanism interestMechanism;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
-        bankAccount = mock(BankAccount.class);
+        bankAccountImpl = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
     }
 
@@ -30,15 +30,15 @@ public class DepositBrokeTest extends EasyMockSupport {
     public void execute() throws Exception {
         double amount = 1000.0;
 
-        bankAccount.payment(eq(amount));
-        bankAccount.removeDeposit(isA(Deposit.class));
+        bankAccountImpl.payment(eq(amount));
+        bankAccountImpl.removeDeposit(isA(Deposit.class));
 
         replayAll();
 
         Deposit deposit = new Deposit(amount);
         deposit.setInterestMechanism(interestMechanism);
 
-        DepositBroke depositBroke = new DepositBroke("Test", bankAccount, deposit);
+        DepositBroke depositBroke = new DepositBroke("Test", bankAccountImpl, deposit);
         depositBroke.execute();
 
         assertEquals(deposit.getBalance(), 1000, 0.0);

@@ -3,8 +3,7 @@ package pl.put.miasi.bank.bankOperations.depositOperations;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
 import pl.put.miasi.bank.bankProducts.Deposit;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 import java.security.InvalidParameterException;
 
@@ -13,12 +12,12 @@ import java.security.InvalidParameterException;
  */
 public class DepositAssumption extends BankOperation {
     private double depositAmount;
-    private BankAccountInterface bankAccount;
+    private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
 
-    public DepositAssumption(String description, BankAccountInterface bankAccount, double depositAmount, InterestMechanism interestMechanism) {
+    public DepositAssumption(String description, BankAccountDecorator bankAccountDecorator, double depositAmount, InterestMechanism interestMechanism) {
         super(description);
-        this.bankAccount = bankAccount;
+        this.bankAccountDecorator = bankAccountDecorator;
         this.depositAmount = depositAmount;
         this.interestMechanism = interestMechanism;
     }
@@ -36,8 +35,8 @@ public class DepositAssumption extends BankOperation {
 
         super.execute();
         Deposit deposit = new Deposit(depositAmount);
-        bankAccount.withdraw(depositAmount);
+        bankAccountDecorator.withdraw(depositAmount);
         deposit.setInterestMechanism(interestMechanism);
-        bankAccount.addDeposit(deposit);
+        bankAccountDecorator.addDeposit(deposit);
     }
 }

@@ -17,12 +17,12 @@ import static org.junit.Assert.assertEquals;
  * @author Bartosz Skotarek
  */
 public class CreditInstallmentRepaymentTest extends EasyMockSupport {
-    private BankAccount bankAccount;
+    private BankAccount bankAccountImpl;
     private InterestMechanism interestMechanism;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
-        bankAccount = mock(BankAccount.class);
+        bankAccountImpl = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
     }
 
@@ -32,14 +32,14 @@ public class CreditInstallmentRepaymentTest extends EasyMockSupport {
         double interest = 100.0;
         Credit credit = new Credit(amount);
 
-        bankAccount.withdraw(eq(amount + interest));
+        bankAccountImpl.withdraw(eq(amount + interest));
         expect(interestMechanism.calculateInterest(eq(amount))).andReturn(interest);
 
         replayAll();
 
         credit.setInterestMechanism(interestMechanism);
 
-        CreditInstallmentRepayment creditInstallmentRepayment = new CreditInstallmentRepayment("Test", bankAccount, credit);
+        CreditInstallmentRepayment creditInstallmentRepayment = new CreditInstallmentRepayment("Test", bankAccountImpl, credit);
         creditInstallmentRepayment.execute();
 
         assertEquals(credit.getBalance(), 0.0, 0.0);

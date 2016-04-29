@@ -3,7 +3,6 @@ package pl.put.miasi.bank.bankOperations.bankProductOperations;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
 import pl.put.miasi.bank.bankProducts.BankProduct;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
 
 /**
  * Obliczanie odsetek

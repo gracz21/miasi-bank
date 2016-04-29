@@ -1,11 +1,7 @@
 package pl.put.miasi.bank;
 
-import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by inf109714 on 2016-04-22.
@@ -33,9 +29,9 @@ public class BankMediator {
         banks.remove(bank);
     }
 
-//    public BankOperation makeOperation(BankAccountInterface targetBankAccount) {
+//    public BankOperation makeOperation(BankAccountDecorator targetBankAccount) {
 //        boolean exists = false;
-//        List<BankAccountInterface> bankAccounts;
+//        List<BankAccountDecorator> bankAccounts;
 //        for(Bank bank: banks) {
 //            for(Client client: bank.getClients()) {
 //                client.getBankAccounts().stream().filter(bankAccount -> bankAccount == targetBankAccount).forEach(bankAccount -> {

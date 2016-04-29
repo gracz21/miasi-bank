@@ -15,12 +15,12 @@ import java.security.InvalidParameterException;
  * Created by inf109714 on 2016-04-15.
  */
 public class PaymentTest extends EasyMockSupport {
-    private BankAccount bankAccount;
+    private BankAccount bankAccountImpl;
     private Payment payment;
 
     @Before
     public void setup() throws BalanceException {
-        bankAccount = mock(BankAccount.class);
+        bankAccountImpl = mock(BankAccount.class);
     }
 
     @Test
@@ -31,10 +31,10 @@ public class PaymentTest extends EasyMockSupport {
     @Test
     public void testExecute() throws Exception {
         double amount = 400;
-        bankAccount.payment(eq(amount));
+        bankAccountImpl.payment(eq(amount));
         replayAll();
 
-        payment = new Payment("Test payment", bankAccount, amount);
+        payment = new Payment("Test payment", bankAccountImpl, amount);
         payment.execute();
 
         verifyAll();
@@ -45,7 +45,7 @@ public class PaymentTest extends EasyMockSupport {
         double amount = -400;
         replayAll();
 
-        payment = new Payment("Test payment", bankAccount, amount);
+        payment = new Payment("Test payment", bankAccountImpl, amount);
         try {
             payment.execute();
             fail();

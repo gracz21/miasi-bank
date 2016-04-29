@@ -1,20 +1,19 @@
 package pl.put.miasi.bank.bankOperations.depositOperations;
 
 import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.Deposit;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 /**
  * Zerwanie lokaty
  */
 public class DepositBroke extends BankOperation {
-    private BankAccountInterface bankAccount;
+    private BankAccountDecorator bankAccountDecorator;
     private Deposit deposit;
 
-    public DepositBroke(String description, BankAccountInterface bankAccount, Deposit deposit) {
+    public DepositBroke(String description, BankAccountDecorator bankAccountDecorator, Deposit deposit) {
         super(description);
-        this.bankAccount = bankAccount;
+        this.bankAccountDecorator = bankAccountDecorator;
         this.deposit = deposit;
     }
 
@@ -26,7 +25,7 @@ public class DepositBroke extends BankOperation {
     @Override
     public void execute() throws Exception {
         super.execute();
-        bankAccount.payment(deposit.getBalance());
-        bankAccount.removeDeposit(deposit);
+        bankAccountDecorator.payment(deposit.getBalance());
+        bankAccountDecorator.removeDeposit(deposit);
     }
 }

@@ -1,9 +1,7 @@
 package pl.put.miasi.bank.bankOperations.bankAccountOperations;
 
 import pl.put.miasi.bank.bankOperations.BankOperation;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
-import pl.put.miasi.bank.bankProducts.exception.BalanceException;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 import java.security.InvalidParameterException;
 
@@ -11,13 +9,13 @@ import java.security.InvalidParameterException;
  * Wplata
  */
 public class Payment extends BankOperation {
-    private BankAccountInterface bankAccount;
+    private BankAccountDecorator bankAccountDecorator;
     private double amount;
 
-    public Payment(String description, BankAccountInterface bankAccount, double amount) {
+    public Payment(String description, BankAccountDecorator bankAccountDecorator, double amount) {
         super(description);
         this.executed = false;
-        this.bankAccount = bankAccount;
+        this.bankAccountDecorator = bankAccountDecorator;
         this.amount = amount;
     }
 
@@ -33,6 +31,6 @@ public class Payment extends BankOperation {
         }
 
         super.execute();
-        bankAccount.payment(this.amount);
+        bankAccountDecorator.payment(this.amount);
     }
 }
