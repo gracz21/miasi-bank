@@ -29,13 +29,12 @@ public class Bank {
     private List<BankProduct> bankProducts;
     private List<Report> reports;
 
-    public Bank() {
-        bankMediator = BankMediator.getInstance();
-        bankMediator.addBank(this);
-    }
-
     public void addBankProduct(BankProduct bankProduct) {
         bankProducts.add(bankProduct);
+    }
+
+    public void setBankMediator(BankMediator bankMediator) {
+        this.bankMediator = bankMediator;
     }
 
     public List<BankOperation> collectGlobalHistory() {

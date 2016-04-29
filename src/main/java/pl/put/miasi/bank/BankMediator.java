@@ -7,22 +7,15 @@ import java.util.List;
  * Created by inf109714 on 2016-04-22.
  */
 public class BankMediator {
-    private static BankMediator instance;
     private List<Bank> banks;
 
-    private BankMediator() {
+    public BankMediator() {
         banks = new LinkedList<Bank>();
     }
 
-    public static BankMediator getInstance() {
-        if(instance == null) {
-            instance = new BankMediator();
-        }
-        return instance;
-    }
-
-    public void addBank(Bank bank) {
+    public BankMediator addBank(Bank bank) {
         banks.add(bank);
+        return this;
     }
 
     public void removeBank(Bank bank) {
