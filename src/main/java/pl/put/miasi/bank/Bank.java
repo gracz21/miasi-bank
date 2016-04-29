@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class Bank {
     private BankMediator bankMediator;
-    private List<Client> clients;
+    private List<BankProduct> bankProducts;
     private List<Report> reports;
 
     public Bank() {
@@ -33,21 +33,21 @@ public class Bank {
         bankMediator.addBank(this);
     }
 
-    public void addClient(Client client) {
-        clients.add(client);
+    public void addBankProduct(BankProduct bankProduct) {
+        bankProducts.add(bankProduct);
     }
+
     public List<BankOperation> collectGlobalHistory() {
         List<BankOperation> globalHistory = new LinkedList<BankOperation>();
-        for (Client client: clients)
-            for (BankProduct bankProduct: client.getBankProducts())
-                globalHistory.addAll(bankProduct.getHistory().getBankOperations());
+        for (BankProduct bankProduct: bankProducts)
+            globalHistory.addAll(bankProduct.getHistory().getBankOperations());
 
         Collections.sort(globalHistory);
         return globalHistory;
     }
 
-    List<Client> getClients() {
-        return clients;
+    public List<BankProduct> getBankProducts() {
+        return Collections.unmodifiableList(bankProducts);
     }
 
     public void payment(BankAccountInterface bankAccount, double amount, String description) throws Exception {
