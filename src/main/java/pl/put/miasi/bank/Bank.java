@@ -16,6 +16,7 @@ import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountInterface;
 import pl.put.miasi.bank.reports.Report;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,5 +88,11 @@ public class Bank {
 
     public void depositBroke(BankAccount bankAccount, Deposit deposit, String description) throws Exception {
         bankAccount.doOperation(new DepositBroke(description, bankAccount, deposit));
+    }
+
+    public List<BankProduct> doReport(Report report) {
+        List<BankProduct> result = new ArrayList<>();
+        bankProducts.forEach(bankProduct -> result.add(bankProduct.accept(report)));
+        return result;
     }
 }
