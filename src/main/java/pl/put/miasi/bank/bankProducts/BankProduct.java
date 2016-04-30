@@ -11,17 +11,13 @@ import pl.put.miasi.bank.reports.Report;
 public abstract class BankProduct {
     private static long idGlobal;
 
-    private long id = idGlobal++;
-    private History history = new History();
-    private InterestMechanism interestMechanism;
+    protected long id = idGlobal++;
+    protected History history = new History();
+    protected InterestMechanism interestMechanism;
     protected double balance;
 
     public BankProduct(double balance) {
         this.balance = balance;
-    }
-
-    public void addBankOperation(BankOperation bankOperation) {
-        history.addBankOperation(bankOperation);
     }
 
     public double getBalance() {
@@ -33,10 +29,6 @@ public abstract class BankProduct {
 
     public void setBalance(double balance) {
         this.balance = balance;
-    }
-
-    public double calculateInterest(double amount) {
-        return interestMechanism.calculateInterest(amount);
     }
 
     public InterestMechanism getInterestMechanism() {
