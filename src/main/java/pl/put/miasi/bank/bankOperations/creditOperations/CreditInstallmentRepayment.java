@@ -27,6 +27,6 @@ public class CreditInstallmentRepayment extends BankOperation {
         super.execute();
         double installment = credit.calculateInstallment();
         bankAccountDecorator.withdraw(installment);
-        credit.setBalance(0.0);
+        credit.deactivate();
     }
 }

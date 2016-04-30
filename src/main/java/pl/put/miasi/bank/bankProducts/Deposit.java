@@ -1,17 +1,16 @@
 package pl.put.miasi.bank.bankProducts;
 
-import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.reports.Report;
 
 /**
  * Lokata
  */
 public class Deposit extends BankProduct {
-    boolean isActive;
+    private boolean isActive;
 
     public Deposit(double balance) {
         super(balance);
-        isActive = true;
+        this.isActive = true;
     }
 
     public boolean isActive() {

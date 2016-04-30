@@ -73,12 +73,12 @@ public class Bank {
         bankProduct.doOperation(new InterestMechanismChange(description, interestMechanism, bankProduct));
     }
 
-    public void creditInstallmentRepayment(BankAccount bankAccountImpl, Credit credit, String description) throws Exception {
-        bankAccountImpl.doOperation(new CreditInstallmentRepayment(description, bankAccountImpl, credit));
-    }
-
     public void creditTaking(double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism, String description) throws Exception {
         bankAccountDecorator.doOperation(new CreditTaking(description, amount, bankAccountDecorator, interestMechanism));
+    }
+
+    public void creditInstallmentRepayment(BankAccount bankAccountImpl, Credit credit, String description) throws Exception {
+        bankAccountImpl.doOperation(new CreditInstallmentRepayment(description, bankAccountImpl, credit));
     }
 
     public void depositAssumption(BankAccount bankAccountImpl, double depositAmount, InterestMechanism interestMechanism, String description) throws Exception {

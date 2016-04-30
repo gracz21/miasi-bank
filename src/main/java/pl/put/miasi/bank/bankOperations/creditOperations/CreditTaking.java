@@ -36,6 +36,7 @@ public class CreditTaking extends BankOperation {
         super.execute();
         Credit credit = new Credit(amount);
         bankAccountDecorator.payment(amount);
+        bankAccountDecorator.addCredit(credit);
         credit.setInterestMechanism(interestMechanism);
     }
 }

@@ -26,6 +26,6 @@ public class DepositBroke extends BankOperation {
     public void execute() throws Exception {
         super.execute();
         bankAccountDecorator.payment(deposit.getBalance());
-        bankAccountDecorator.removeDeposit(deposit);
+        deposit.deactivate();
     }
 }

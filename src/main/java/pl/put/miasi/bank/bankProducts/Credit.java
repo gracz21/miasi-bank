@@ -1,17 +1,16 @@
 package pl.put.miasi.bank.bankProducts;
 
-import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.reports.Report;
 
 /**
  * Kredyt
  */
 public class Credit extends BankProduct {
-    boolean isActive;
+    private boolean isActive;
 
     public Credit(double balance) {
         super(balance);
-        isActive = true;
+        this.isActive = true;
     }
 
     public boolean isActive() {
@@ -28,6 +27,6 @@ public class Credit extends BankProduct {
     }
 
     public double calculateInstallment() {
-        return getBalance() + calculateInterest(getBalance());
+        return getBalance() + this.interestMechanism.calculateInterest(getBalance());
     }
 }
