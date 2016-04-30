@@ -21,6 +21,7 @@ public abstract class BankOperation implements Comparable<BankOperation> {
     protected BankOperation(String description) {
         this.description = description;
         this.realisationDate = new DateTime();
+        this.executed = false;
     }
 
     public long getId() {

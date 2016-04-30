@@ -17,7 +17,6 @@ public class Transfer extends BankOperation {
         this.sourceBankAccountDecorator = sourceBankAccountDecorator;
         this.targetBankAccountDecorator = targetBankAccountDecorator;
         this.amount = amount;
-        this.executed = false;
     }
 
     @Override

@@ -14,7 +14,6 @@ public class Payment extends BankOperation {
 
     public Payment(String description, BankAccountDecorator bankAccountDecorator, double amount) {
         super(description);
-        this.executed = false;
         this.bankAccountDecorator = bankAccountDecorator;
         this.amount = amount;
     }

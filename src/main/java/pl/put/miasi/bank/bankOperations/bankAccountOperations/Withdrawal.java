@@ -16,7 +16,6 @@ public class Withdrawal extends BankOperation {
         super(description);
         this.bankAccountDecorator = bankAccountDecorator;
         this.amount = amount;
-        this.executed = false;
     }
 
     @Override
