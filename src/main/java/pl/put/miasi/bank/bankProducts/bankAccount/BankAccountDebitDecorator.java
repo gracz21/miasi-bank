@@ -13,12 +13,12 @@ import java.security.InvalidParameterException;
 /**
  * Created by inf109714 on 2016-04-22.
  */
-public class BankAccountDecoratorDebit extends BankAccountDecorator {
+public class BankAccountDebitDecorator extends BankAccountDecorator {
     private DebitMechanism debitMechanism;
     private BankAccount bankAccount;
     private double debitValue;
 
-    public BankAccountDecoratorDebit(DebitMechanism debitMechanism, BankAccount bankAccount) {
+    public BankAccountDebitDecorator(DebitMechanism debitMechanism, BankAccount bankAccount) {
         super(0);
         this.debitMechanism = debitMechanism;
         this.bankAccount = bankAccount;
