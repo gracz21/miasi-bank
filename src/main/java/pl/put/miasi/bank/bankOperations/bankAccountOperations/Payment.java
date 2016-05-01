@@ -25,8 +25,8 @@ public class Payment extends BankOperation {
 
     @Override
     public void execute() throws Exception {
-        if(this.amount < 0) {
-            throw new InvalidParameterException("Amount is negative");
+        if(this.amount <= 0) {
+            throw new InvalidParameterException("Amount is negative or is equal to 0");
         }
 
         super.execute();
