@@ -1,4 +1,4 @@
-package pl.put.miasi.bank;
+package pl.put.miasi.bank.banks;
 
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
