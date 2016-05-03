@@ -15,8 +15,4 @@ public abstract class BankAccountDecorator extends BankProduct {
 
     public abstract void withdraw(double amount) throws BalanceException;
     public abstract void payment(double amount) throws BalanceException;
-    public abstract void addDeposit(Deposit deposit);
-    public abstract void removeDeposit(Deposit deposit);
-    public abstract void addCredit(Credit credit);
-    public abstract void removeCredit(Credit credit);
 }

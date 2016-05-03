@@ -67,26 +67,6 @@ public class BankAccountDebitDecorator extends BankAccountDecorator {
         }
     }
 
-    @Override
-    public void addDeposit(Deposit deposit) {
-        bankAccount.addDeposit(deposit);
-    }
-
-    @Override
-    public void removeDeposit(Deposit deposit) {
-        bankAccount.removeDeposit(deposit);
-    }
-
-    @Override
-    public void addCredit(Credit credit) {
-        bankAccount.addCredit(credit);
-    }
-
-    @Override
-    public void removeCredit(Credit credit) {
-        bankAccount.removeCredit(credit);
-    }
-
     public double getDebitValue() {
         return debitValue;
     }

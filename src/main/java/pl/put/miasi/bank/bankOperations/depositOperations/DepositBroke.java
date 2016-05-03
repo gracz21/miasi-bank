@@ -8,12 +8,10 @@ import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
  * Zerwanie lokaty
  */
 public class DepositBroke extends BankOperation {
-    private BankAccountDecorator bankAccountDecorator;
     private Deposit deposit;
 
-    public DepositBroke(String description, BankAccountDecorator bankAccountDecorator, Deposit deposit) {
+    public DepositBroke(String description, Deposit deposit) {
         super(description);
-        this.bankAccountDecorator = bankAccountDecorator;
         this.deposit = deposit;
     }
 
@@ -25,7 +23,7 @@ public class DepositBroke extends BankOperation {
     @Override
     public void execute() throws Exception {
         super.execute();
-        bankAccountDecorator.payment(deposit.getBalance());
+        deposit.getBankAccountDecorator().payment(deposit.getBalance());
         deposit.deactivate();
     }
 }

@@ -30,13 +30,12 @@ public class CreditTaking extends BankOperation {
     @Override
     public void execute() throws Exception {
         if(this.amount <= 0) {
-            throw new InvalidParameterException("Credit amount is negative");
+            throw new InvalidParameterException("Credit amount is negative or equals to 0");
         }
 
         super.execute();
-        Credit credit = new Credit(amount);
+        Credit credit = new Credit(amount, bankAccountDecorator);
         bankAccountDecorator.payment(amount);
-        bankAccountDecorator.addCredit(credit);
         credit.setInterestMechanism(interestMechanism);
     }
 }
