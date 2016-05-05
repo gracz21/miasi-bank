@@ -22,7 +22,7 @@ public class Over1000Report implements Report {
 
     @Override
     public BankProduct visit(Credit credit) {
-        if(credit.getBalance() > limit && credit.isActive()) {
+        if(credit.isActive() && credit.getBalance() > limit) {
             return credit;
         } else {
             return null;
@@ -31,7 +31,7 @@ public class Over1000Report implements Report {
 
     @Override
     public BankProduct visit(Deposit deposit) {
-        if(deposit.getBalance() > limit && deposit.isActive()) {
+        if(deposit.isActive() && deposit.getBalance() > limit) {
             return deposit;
         } else {
             return null;
