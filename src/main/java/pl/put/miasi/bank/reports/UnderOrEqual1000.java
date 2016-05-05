@@ -13,19 +13,19 @@ public class UnderOrEqual1000 implements Report {
 
     @Override
     public BankProduct visit(BankAccount bankAccountImpl) {
-        if (bankAccountImpl.getBalance() <= 1000) return bankAccountImpl;
+        if (bankAccountImpl.getBalance() <= limit) return bankAccountImpl;
         return null;
     }
 
     @Override
     public BankProduct visit(Credit credit) {
-        if (credit.isActive() && (credit.getBalance() <= 1000)) return credit;
+        if (credit.isActive() && (credit.getBalance() <= limit)) return credit;
         return null;
     }
 
     @Override
     public BankProduct visit(Deposit deposit) {
-        if (deposit.isActive() && deposit.getBalance() <= 1000) return deposit;
+        if (deposit.isActive() && deposit.getBalance() <= limit) return deposit;
         return null;
     }
 }

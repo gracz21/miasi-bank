@@ -45,8 +45,12 @@ public abstract class BankProduct {
     }
 
     public void doOperation(BankOperation bankOperation) throws Exception {
-        bankOperation.execute();
-        this.history.addBankOperation(bankOperation);
+        try {
+            bankOperation.execute();
+            this.history.addBankOperation(bankOperation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public abstract BankProduct accept(Report report);

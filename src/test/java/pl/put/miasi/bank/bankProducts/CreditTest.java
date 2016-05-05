@@ -7,6 +7,8 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 /**
  * @author Kamil Walkowiak
@@ -14,12 +16,15 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 public class CreditTest extends EasyMockSupport {
     private Credit credit;
     private InterestMechanism interestMechanism;
+    private BankAccountDecorator bankAccountDecorator;
     private double amount;
 
     @Before
     public void before() {
+        bankAccountDecorator = mock(BankAccount.class);
+
         amount = 100.0;
-        credit = new Credit(amount);
+        credit = new Credit(amount, bankAccountDecorator);
 
         interestMechanism = mock(InterestMechanism.class);
         expect(interestMechanism.calculateInterest(eq(amount))).andReturn(amount*0.1);

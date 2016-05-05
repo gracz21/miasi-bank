@@ -7,6 +7,7 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import static org.easymock.EasyMock.eq;
@@ -17,12 +18,12 @@ import static org.junit.Assert.assertEquals;
  * @author Bartosz Skotarek
  */
 public class DepositBrokeTest extends EasyMockSupport {
-    private BankAccount bankAccountImpl;
+    private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
-        bankAccountImpl = mock(BankAccount.class);
+        bankAccountDecorator = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
     }
 
@@ -30,15 +31,14 @@ public class DepositBrokeTest extends EasyMockSupport {
     public void execute() throws Exception {
         double amount = 1000.0;
 
-        bankAccountImpl.payment(eq(amount));
-        bankAccountImpl.removeDeposit(isA(Deposit.class));
+        bankAccountDecorator.payment(eq(amount));
 
         replayAll();
 
-        Deposit deposit = new Deposit(amount);
+        Deposit deposit = new Deposit(amount, bankAccountDecorator);
         deposit.setInterestMechanism(interestMechanism);
 
-        DepositBroke depositBroke = new DepositBroke("Test", bankAccountImpl, deposit);
+        DepositBroke depositBroke = new DepositBroke("Test", deposit);
         depositBroke.execute();
 
         assertEquals(deposit.getBalance(), 1000, 0.0);

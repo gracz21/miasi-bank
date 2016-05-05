@@ -40,10 +40,10 @@ public class CreditInstallmentRepaymentTest extends EasyMockSupport {
         Credit credit = new Credit(amount, bankAccountDecorator);
         credit.setInterestMechanism(interestMechanism);
 
-        CreditInstallmentRepayment creditInstallmentRepayment = new CreditInstallmentRepayment("Test", bankAccountDecorator, credit);
+        CreditInstallmentRepayment creditInstallmentRepayment = new CreditInstallmentRepayment("Test", credit);
         creditInstallmentRepayment.execute();
 
-        assertEquals(credit.getBalance(), 0.0, 0.0);
+        assertEquals(credit.getBalance(), 1000.0, 0.0);
         verifyAll();
     }
 

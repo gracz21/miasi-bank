@@ -5,13 +5,17 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
+import pl.put.miasi.bank.bankProducts.Credit;
+import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
+import pl.put.miasi.bank.banks.Bank;
 
 import java.security.InvalidParameterException;
 
 import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.isA;
 import static org.junit.Assert.fail;
 
 /**
@@ -20,11 +24,13 @@ import static org.junit.Assert.fail;
 public class CreditTakingTest extends EasyMockSupport {
     private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
+    private Bank bank;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
         bankAccountDecorator = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
+        bank = mock(Bank.class);
     }
 
     @Test
@@ -32,10 +38,11 @@ public class CreditTakingTest extends EasyMockSupport {
         double amount = 1000.0;
 
         bankAccountDecorator.payment(eq(amount));
+        bank.addBankProduct(isA(Credit.class));
 
         replayAll();
 
-        CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountDecorator, interestMechanism);
+        CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountDecorator, interestMechanism, bank);
         creditTaking.execute();
 
         verifyAll();
@@ -48,7 +55,7 @@ public class CreditTakingTest extends EasyMockSupport {
         replayAll();
 
         try {
-            CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountDecorator, interestMechanism);
+            CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountDecorator, interestMechanism, bank);
             creditTaking.execute();
 
             fail();

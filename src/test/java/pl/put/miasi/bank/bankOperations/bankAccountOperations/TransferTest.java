@@ -6,7 +6,10 @@ import org.junit.Test;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
+import java.security.InvalidParameterException;
+
 import static org.easymock.EasyMock.eq;
+import static org.junit.Assert.fail;
 
 /**
  * Created by inf109714 on 2016-04-15.
@@ -31,6 +34,7 @@ public class TransferTest extends EasyMockSupport {
     public void testExecute() throws Exception {
         double amount = 400;
         targetBankAccountDecorator.payment(eq(amount));
+        sourceBankAccountDecorator.withdraw(eq(amount));
         replayAll();
 
         transfer = new Transfer("Test transfer", sourceBankAccountDecorator, targetBankAccountDecorator, amount);
@@ -42,12 +46,15 @@ public class TransferTest extends EasyMockSupport {
     @Test
     public void testPaymentAmountNegative() throws Exception {
         double amount = -400;
-        sourceBankAccountDecorator.withdraw(eq(-amount));
         replayAll();
 
         transfer = new Transfer("Test transfer", sourceBankAccountDecorator, targetBankAccountDecorator, amount);
-        transfer.execute();
+        try {
+            transfer.execute();
 
-        verifyAll();
+            fail();
+        } catch (InvalidParameterException e) {
+            verifyAll();
+        }
     }
 }

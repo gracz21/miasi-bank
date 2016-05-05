@@ -7,7 +7,9 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
 import pl.put.miasi.bank.bankProducts.Deposit;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
+import pl.put.miasi.bank.banks.Bank;
 
 import java.security.InvalidParameterException;
 
@@ -19,25 +21,27 @@ import static org.junit.Assert.fail;
  * @author Bartosz Skotarek
  */
 public class DepositAssumptionTest extends EasyMockSupport {
-    private BankAccount bankAccountImpl;
+    private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
+    private Bank bank;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
-        bankAccountImpl = mock(BankAccount.class);
+        bankAccountDecorator = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
+        bank = mock(Bank.class);
     }
 
     @Test
     public void depositAssumption() throws Exception {
         double amount = 1000.0;
 
-        bankAccountImpl.withdraw(eq(amount));
-        bankAccountImpl.addDeposit(isA(Deposit.class));
+        bankAccountDecorator.withdraw(eq(amount));
+        bank.addBankProduct(isA(Deposit.class));
 
         replayAll();
 
-        DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccountImpl, amount, interestMechanism);
+        DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccountDecorator, amount, interestMechanism, bank);
         depositAssumption.execute();
 
         verifyAll();
@@ -50,7 +54,7 @@ public class DepositAssumptionTest extends EasyMockSupport {
         replayAll();
 
         try {
-            DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccountImpl, amount, interestMechanism);
+            DepositAssumption depositAssumption = new DepositAssumption("Test", bankAccountDecorator, amount, interestMechanism, bank);
             depositAssumption.execute();
 
             fail();
