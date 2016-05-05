@@ -1,4 +1,4 @@
-package pl.put.miasi.bank.bankProducts;
+package pl.put.miasi.bank.bankProducts.bankAccounts;
 
 import static org.easymock.EasyMock.*;
 import org.easymock.EasyMockSupport;

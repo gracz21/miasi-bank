@@ -26,8 +26,11 @@ public class BankAccount extends BankAccountDecorator {
     }
 
     @Override
-    public void withdraw(double amount) throws BalanceException {
-        if(balance >= amount && amount >= 0) {
+    public void withdraw(double amount) throws BalanceException, InvalidParameterException {
+        if(amount <= 0) {
+            throw new InvalidParameterException("Amount is negative or equals to 0");
+        }
+        if(balance >= amount) {
             balance -= amount;
         } else {
             throw new BalanceException("Insufficient balance");
@@ -35,11 +38,11 @@ public class BankAccount extends BankAccountDecorator {
     }
 
     @Override
-    public void payment(double amount) throws BalanceException {
+    public void payment(double amount) {
         if(amount > 0) {
             balance += amount;
         } else {
-            throw new InvalidParameterException("Negative amount");
+            throw new InvalidParameterException("Amount is negative or equals to 0");
         }
     }
 
