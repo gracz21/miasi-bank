@@ -1,10 +1,11 @@
 package pl.put.miasi.bank.banks;
 
-import pl.put.miasi.bank.bankOperations.BankOperation;
+import pl.put.miasi.bank.bankOperations.bankAccountOperations.interbankOperations.InterbankOperation;
 import pl.put.miasi.bank.banks.exceptions.BankNotFoundException;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by inf109714 on 2016-04-22.
@@ -25,10 +26,10 @@ class BankMediator {
         banks.remove(bank);
     }
 
-    void deliverInterbankOperation(long bankId, List<BankOperation> interbankOperations) throws Exception {
-        if(banks.stream().filter(bank -> bank.getBankId() == bankId).findFirst().isPresent()) {
-            banks.stream().filter(bank -> bank.getBankId() == bankId).findFirst().get()
-                    .handleInterbankOperations(interbankOperations);
+    void deliverInterbankOperation(long sourceBankId, long targetBankId, Map<Long, InterbankOperation> interbankOperations) throws Exception {
+        if(banks.stream().filter(bank -> bank.getBankId() == targetBankId).findFirst().isPresent()) {
+            banks.stream().filter(bank -> bank.getBankId() == targetBankId).findFirst().get()
+                    .handleInterbankOperations(sourceBankId, interbankOperations);
         } else {
             throw new BankNotFoundException("Bank with given id not fond");
         }

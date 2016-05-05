@@ -1,4 +1,4 @@
-package pl.put.miasi.bank.bankOperations.bankAccountOperations;
+package pl.put.miasi.bank.bankOperations.bankAccountOperations.interbankOperations;
 
 import pl.put.miasi.bank.banks.Bank;
 import pl.put.miasi.bank.bankOperations.BankOperation;
@@ -9,14 +9,11 @@ import java.security.InvalidParameterException;
 /**
  * @author Kamil Walkowiak
  */
-public class UnsuccessfulInterbankTransfer extends BankOperation {
-    private BankAccountDecorator bankAccount;
-    private Bank bank;
+public class UnsuccessfulInterbankTransfer extends InterbankOperation {
     private double amount;
 
-    public UnsuccessfulInterbankTransfer(String description, BankAccountDecorator bankAccount, double amount) {
+    public UnsuccessfulInterbankTransfer(String description, double amount) {
         super(description);
-        this.bankAccount = bankAccount;
         this.amount = amount;
     }
 
@@ -30,7 +27,7 @@ public class UnsuccessfulInterbankTransfer extends BankOperation {
         super.execute();
 
         if(amount >0) {
-            bankAccount.payment(amount);
+            executingBankAccount.payment(amount);
         } else {
             throw new InvalidParameterException("Amount is negative");
         }
