@@ -78,8 +78,13 @@ public class Bank {
 
     public void transfer(BankAccountDecorator sourceBankAccountDecorator, BankAccountDecorator targetBankAccountDecorator, double amount, String description) throws Exception {
         Transfer transfer = new Transfer(description, sourceBankAccountDecorator, targetBankAccountDecorator, amount);
-        sourceBankAccountDecorator.doOperation(transfer);
-        targetBankAccountDecorator.getHistory().addBankOperation(transfer);
+        try {
+            sourceBankAccountDecorator.doOperation(transfer);
+            targetBankAccountDecorator.getHistory().addBankOperation(transfer);
+            globalHistory.addBankOperation(transfer);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void interestCalculation(BankProduct bankProduct, String description) throws Exception {

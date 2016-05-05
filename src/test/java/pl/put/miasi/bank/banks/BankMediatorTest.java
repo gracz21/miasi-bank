@@ -1,10 +1,13 @@
 package pl.put.miasi.bank.banks;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.fail;
+
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankOperations.bankAccountOperations.interbankOperations.InterbankOperation;
+import pl.put.miasi.bank.banks.exceptions.BankNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,5 +40,23 @@ public class BankMediatorTest extends EasyMockSupport {
         bankMediator.addBank(bank);
         bankMediator.deliverInterbankOperation(sourceBankId, targetBankId, interbankOperations);
         verifyAll();
+    }
+
+    @Test
+    public void testDeliverInterbankOperationWithException() throws Exception {
+        long sourceBankId = 1;
+        long targetBankId = 2;
+
+        expect(bank.getBankId()).andReturn(targetBankId);
+        replayAll();
+
+        bankMediator.addBank(bank);
+        try {
+            bankMediator.deliverInterbankOperation(sourceBankId, 3, interbankOperations);
+            fail();
+        } catch(BankNotFoundException e) {
+            verifyAll();
+        }
+
     }
 }
