@@ -6,6 +6,7 @@ import org.junit.Test;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankMechanisms.exception.InterestRateException;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.security.InvalidParameterException;
@@ -17,12 +18,12 @@ import static org.junit.Assert.fail;
  * @author Bartosz Skotarek
  */
 public class CreditTakingTest extends EasyMockSupport {
-    private BankAccount bankAccountImpl;
+    private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
 
     @Before
     public void before() throws InterestRateException, BalanceException {
-        bankAccountImpl = mock(BankAccount.class);
+        bankAccountDecorator = mock(BankAccount.class);
         interestMechanism = mock(InterestMechanism.class);
     }
 
@@ -30,11 +31,11 @@ public class CreditTakingTest extends EasyMockSupport {
     public void execute() throws Exception {
         double amount = 1000.0;
 
-        bankAccountImpl.payment(eq(amount));
+        bankAccountDecorator.payment(eq(amount));
 
         replayAll();
 
-        CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountImpl, interestMechanism);
+        CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountDecorator, interestMechanism);
         creditTaking.execute();
 
         verifyAll();
@@ -47,7 +48,7 @@ public class CreditTakingTest extends EasyMockSupport {
         replayAll();
 
         try {
-            CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountImpl, interestMechanism);
+            CreditTaking creditTaking = new CreditTaking("Test", amount, bankAccountDecorator, interestMechanism);
             creditTaking.execute();
 
             fail();

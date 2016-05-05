@@ -13,6 +13,7 @@ import pl.put.miasi.bank.bankOperations.depositOperations.DepositAssumption;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositBroke;
 import pl.put.miasi.bank.bankProducts.*;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
+import pl.put.miasi.bank.banks.exceptions.NoOperationsExceptions;
 import pl.put.miasi.bank.reports.Report;
 
 import java.util.*;
@@ -27,10 +28,12 @@ public class Bank {
     private long bankId;
     private BankMediator bankMediator;
     private List<BankProduct> bankProducts;
+    private Map<Long, Map<Long, BankOperation>> interbankOperationsMap;
 
     public Bank() {
         this.bankId = idCounter.incrementAndGet();
         this.bankProducts = new LinkedList<>();
+        this.interbankOperationsMap = new HashMap<>();
     }
 
     long getBankId() {
@@ -82,7 +85,7 @@ public class Bank {
     }
 
     public void creditTaking(double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism, String description) throws Exception {
-        bankAccountDecorator.doOperation(new CreditTaking(description, amount, bankAccountDecorator, interestMechanism));
+        bankAccountDecorator.doOperation(new CreditTaking(description, amount, bankAccountDecorator, interestMechanism, this));
     }
 
     public void creditInstallmentRepayment(BankAccountDecorator bankAccountDecorator, Credit credit, String description) throws Exception {
@@ -90,11 +93,43 @@ public class Bank {
     }
 
     public void depositAssumption(BankAccountDecorator bankAccountDecorator, double depositAmount, InterestMechanism interestMechanism, String description) throws Exception {
-        bankAccountDecorator.doOperation(new DepositAssumption(description, bankAccountDecorator, depositAmount, interestMechanism));
+        bankAccountDecorator.doOperation(new DepositAssumption(description, bankAccountDecorator, depositAmount, interestMechanism, this));
     }
 
     public void depositBroke(Deposit deposit, String description) throws Exception {
         deposit.doOperation(new DepositBroke(description, deposit));
+    }
+
+    public void interbankTransfer(BankAccountDecorator sourceBankAccount, long targetBankAccountId,
+                                  long targetBankId, double amount, String description) throws Exception {
+        Transfer sourceTransfer = new Transfer(description, sourceBankAccount, targetBankAccount, -amount);
+        Transfer targetTransfer = new Transfer(description, sourceBankAccount, targetBankAccount, amount);
+        sourceBankAccount.doOperation(sourceTransfer);
+
+        if(!interbankOperationsMap.containsKey(targetBankId)) {
+            interbankOperationsMap.put(targetBankId, new HashMap<>());
+        }
+        interbankOperationsMap.get(targetBankId).put(targetBankAccountId, targetTransfer);
+    }
+
+    void handleInterbankOperations(List<BankOperation> interbankOperations) throws Exception {
+        for(BankOperation interbankOperation: interbankOperations) {
+            BankAccountDecorator bankAccountDecorator = interbankOperation.getTargetBankAccountDecorator();
+            if(bankProducts.contains(bankAccountDecorator)) {
+                bankAccountDecorator.doOperation(interbankOperation);
+            } else {
+                //TODO send payment back
+            }
+        }
+    }
+
+    public void sendInterbankTransferPackage(long bankId) throws Exception {
+        if(interbankOperationsMap.containsKey(bankId)) {
+            bankMediator.deliverInterbankOperation(bankId, interbankOperationsMap.get(bankId));
+            interbankOperationsMap.remove(bankId);
+        } else {
+            throw new NoOperationsExceptions("No operations stored for this bank");
+        }
     }
 
     public List<BankProduct> doReport(Report report) {

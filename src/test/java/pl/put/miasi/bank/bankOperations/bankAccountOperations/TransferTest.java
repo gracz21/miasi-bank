@@ -4,6 +4,7 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 import static org.easymock.EasyMock.eq;
 
@@ -11,14 +12,14 @@ import static org.easymock.EasyMock.eq;
  * Created by inf109714 on 2016-04-15.
  */
 public class TransferTest extends EasyMockSupport {
-    private BankAccount sourceBankAccountImpl;
-    private BankAccount targetBankAccountImpl;
+    private BankAccountDecorator sourceBankAccountDecorator;
+    private BankAccountDecorator targetBankAccountDecorator;
     private Transfer transfer;
 
     @Before
     public void setup() {
-        sourceBankAccountImpl = mock(BankAccount.class);
-        targetBankAccountImpl = mock(BankAccount.class);
+        sourceBankAccountDecorator = mock(BankAccount.class);
+        targetBankAccountDecorator = mock(BankAccount.class);
     }
 
     @Test
@@ -29,10 +30,10 @@ public class TransferTest extends EasyMockSupport {
     @Test
     public void testExecute() throws Exception {
         double amount = 400;
-        targetBankAccountImpl.payment(eq(amount));
+        targetBankAccountDecorator.payment(eq(amount));
         replayAll();
 
-        transfer = new Transfer("Test transfer", sourceBankAccountImpl, targetBankAccountImpl, amount);
+        transfer = new Transfer("Test transfer", sourceBankAccountDecorator, targetBankAccountDecorator, amount);
         transfer.execute();
 
         verifyAll();
@@ -41,10 +42,10 @@ public class TransferTest extends EasyMockSupport {
     @Test
     public void testPaymentAmountNegative() throws Exception {
         double amount = -400;
-        sourceBankAccountImpl.withdraw(eq(-amount));
+        sourceBankAccountDecorator.withdraw(eq(-amount));
         replayAll();
 
-        transfer = new Transfer("Test transfer", sourceBankAccountImpl, targetBankAccountImpl, amount);
+        transfer = new Transfer("Test transfer", sourceBankAccountDecorator, targetBankAccountDecorator, amount);
         transfer.execute();
 
         verifyAll();

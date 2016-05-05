@@ -9,12 +9,10 @@ import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
  */
 public class CreditInstallmentRepayment extends BankOperation {
     private Credit credit;
-    private BankAccountDecorator bankAccountDecorator;
 
-    public CreditInstallmentRepayment(String description, BankAccountDecorator bankAccountDecorator, Credit credit) {
+    public CreditInstallmentRepayment(String description, Credit credit) {
         super(description);
         this.credit = credit;
-        this.bankAccountDecorator = bankAccountDecorator;
     }
 
     @Override
@@ -26,7 +24,7 @@ public class CreditInstallmentRepayment extends BankOperation {
     public void execute() throws Exception {
         super.execute();
         double installment = credit.calculateInstallment();
-        bankAccountDecorator.withdraw(installment);
+        credit.getBankAccountDecorator().withdraw(installment);
         credit.deactivate();
     }
 }

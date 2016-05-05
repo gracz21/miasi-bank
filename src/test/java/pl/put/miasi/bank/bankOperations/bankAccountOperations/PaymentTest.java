@@ -7,6 +7,7 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.bankProducts.exception.BalanceException;
 
 import java.security.InvalidParameterException;
@@ -15,12 +16,12 @@ import java.security.InvalidParameterException;
  * Created by inf109714 on 2016-04-15.
  */
 public class PaymentTest extends EasyMockSupport {
-    private BankAccount bankAccountImpl;
+    private BankAccountDecorator bankAccountDecorator;
     private Payment payment;
 
     @Before
     public void setup() throws BalanceException {
-        bankAccountImpl = mock(BankAccount.class);
+        bankAccountDecorator = mock(BankAccount.class);
     }
 
     @Test
@@ -31,10 +32,10 @@ public class PaymentTest extends EasyMockSupport {
     @Test
     public void testExecute() throws Exception {
         double amount = 400;
-        bankAccountImpl.payment(eq(amount));
+        bankAccountDecorator.payment(eq(amount));
         replayAll();
 
-        payment = new Payment("Test payment", bankAccountImpl, amount);
+        payment = new Payment("Test payment", bankAccountDecorator, amount);
         payment.execute();
 
         verifyAll();
@@ -45,7 +46,7 @@ public class PaymentTest extends EasyMockSupport {
         double amount = -400;
         replayAll();
 
-        payment = new Payment("Test payment", bankAccountImpl, amount);
+        payment = new Payment("Test payment", bankAccountDecorator, amount);
         try {
             payment.execute();
             fail();

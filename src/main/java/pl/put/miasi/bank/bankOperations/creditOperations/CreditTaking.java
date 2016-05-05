@@ -4,6 +4,7 @@ import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
 import pl.put.miasi.bank.bankOperations.BankOperation;
 import pl.put.miasi.bank.bankProducts.Credit;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
+import pl.put.miasi.bank.banks.Bank;
 
 import java.security.InvalidParameterException;
 
@@ -14,12 +15,14 @@ public class CreditTaking extends BankOperation {
     private double amount;
     private BankAccountDecorator bankAccountDecorator;
     private InterestMechanism interestMechanism;
+    private Bank bank;
 
-    public CreditTaking(String description, double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism) {
+    public CreditTaking(String description, double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism, Bank bank) {
         super(description);
         this.amount = amount;
         this.bankAccountDecorator = bankAccountDecorator;
         this.interestMechanism = interestMechanism;
+        this.bank = bank;
     }
 
     @Override
@@ -37,5 +40,6 @@ public class CreditTaking extends BankOperation {
         Credit credit = new Credit(amount, bankAccountDecorator);
         bankAccountDecorator.payment(amount);
         credit.setInterestMechanism(interestMechanism);
+        bank.addBankProduct(credit);
     }
 }

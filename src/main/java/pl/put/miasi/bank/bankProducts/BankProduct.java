@@ -12,12 +12,17 @@ public abstract class BankProduct {
     private static long idGlobal;
 
     protected long id = idGlobal++;
-    protected History history = new History();
+    protected History history;
     protected InterestMechanism interestMechanism;
     protected double balance;
 
     public BankProduct(double balance) {
         this.balance = balance;
+        this.history = new History();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public double getBalance() {

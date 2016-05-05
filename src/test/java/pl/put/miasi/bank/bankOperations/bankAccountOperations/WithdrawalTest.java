@@ -8,6 +8,7 @@ import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
+import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 
 import java.security.InvalidParameterException;
 
@@ -15,12 +16,12 @@ import java.security.InvalidParameterException;
  * Created by inf109714 on 2016-04-15.
  */
 public class WithdrawalTest extends EasyMockSupport {
-    private BankAccount bankAccountImpl;
+    private BankAccountDecorator bankAccountDecorator;
     private Withdrawal withdrawal;
 
     @Before
     public void setup() {
-        bankAccountImpl = mock(BankAccount.class);
+        bankAccountDecorator = mock(BankAccount.class);
     }
 
     @Test
@@ -31,10 +32,10 @@ public class WithdrawalTest extends EasyMockSupport {
     @Test
     public void testExecute() throws Exception {
         double amount = 400;
-        bankAccountImpl.withdraw(eq(amount));
+        bankAccountDecorator.withdraw(eq(amount));
         replayAll();
 
-        withdrawal = new Withdrawal("Test withdrawal", bankAccountImpl, amount);
+        withdrawal = new Withdrawal("Test withdrawal", bankAccountDecorator, amount);
         withdrawal.execute();
         verifyAll();
     }
@@ -44,7 +45,7 @@ public class WithdrawalTest extends EasyMockSupport {
         double amount = -400;
         replayAll();
 
-        withdrawal = new Withdrawal("Test withdrawal", bankAccountImpl, amount);
+        withdrawal = new Withdrawal("Test withdrawal", bankAccountDecorator, amount);
         try {
             withdrawal.execute();
             fail();
@@ -56,10 +57,10 @@ public class WithdrawalTest extends EasyMockSupport {
     @Test
     public void testPaymentExecutedAgain() throws Exception {
         double amount = 400;
-        bankAccountImpl.withdraw(eq(amount));
+        bankAccountDecorator.withdraw(eq(amount));
         replayAll();
 
-        withdrawal = new Withdrawal("Test withdrawal", bankAccountImpl, amount);
+        withdrawal = new Withdrawal("Test withdrawal", bankAccountDecorator, amount);
         withdrawal.execute();
         try {
             withdrawal.execute();
