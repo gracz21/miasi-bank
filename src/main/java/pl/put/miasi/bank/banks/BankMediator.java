@@ -17,7 +17,7 @@ class BankMediator {
         banks = new LinkedList<Bank>();
     }
 
-    public BankMediator addBank(Bank bank) {
+    BankMediator addBank(Bank bank) {
         banks.add(bank);
         return this;
     }

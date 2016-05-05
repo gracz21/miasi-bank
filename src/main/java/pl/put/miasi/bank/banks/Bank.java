@@ -53,6 +53,7 @@ public class Bank {
 
     public void setBankMediator(BankMediator bankMediator) {
         this.bankMediator = bankMediator;
+        bankMediator.addBank(this);
     }
 
     public void payment(BankAccountDecorator bankAccountDecorator, double amount, String description) throws Exception {
