@@ -178,29 +178,6 @@ public class Bank {
         }
     }
 
-    void handleInterbankOperations(long sourceBankId, Map<Long, InterbankOperation> interbankOperations) throws Exception {
-        for(Map.Entry<Long, InterbankOperation> interbankOperationEntry: interbankOperations.entrySet()) {
-            BankProduct targetBankAccount = bankProducts.get(interbankOperationEntry.getKey());
-            InterbankOperation interbankOperation = interbankOperationEntry.getValue();
-
-            if(targetBankAccount != null && BankAccountDecorator.class.isInstance(targetBankAccount)) {
-                interbankOperationEntry.getValue().setExecutorObject(((BankAccountDecorator)targetBankAccount));
-                try {
-                    targetBankAccount.doOperation(interbankOperation);
-                    globalHistory.addBankOperation(interbankOperation);
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-            } else if(InterbankTransfer.class.isInstance(interbankOperation)) {
-                UnsuccessfulInterbankTransfer unsuccessfulInterbankTransfer =
-                        new UnsuccessfulInterbankTransfer("Return for unsuccessful transfer " + interbankOperation.getDescription(),
-                                interbankOperation.getAmount());
-                storeInterbankOperation(sourceBankId, ((InterbankTransfer) interbankOperation).getSourceBankAccountId(),
-                        unsuccessfulInterbankTransfer);
-            }
-        }
-    }
-
     private void storeInterbankOperation(long bankId, long bankAccountId, InterbankOperation interbankOperation) {
         if(!interbankOperationsMap.containsKey(bankId)) {
             interbankOperationsMap.put(bankId, new HashMap<>());
@@ -215,5 +192,31 @@ public class Bank {
         } else {
             throw new NoOperationsExceptions("No operations stored for this bank");
         }
+    }
+
+    void handleInterbankOperations(long sourceBankId, Map<Long, InterbankOperation> interbankOperations) throws Exception {
+        for(Map.Entry<Long, InterbankOperation> interbankOperationEntry: interbankOperations.entrySet()) {
+            BankProduct targetBankAccount = bankProducts.get(interbankOperationEntry.getKey());
+            InterbankOperation interbankOperation = interbankOperationEntry.getValue();
+
+            if(targetBankAccount != null && BankAccountDecorator.class.isInstance(targetBankAccount)) {
+                interbankOperationEntry.getValue().setExecutorObject(((BankAccountDecorator)targetBankAccount));
+                try {
+                    targetBankAccount.doOperation(interbankOperation);
+                    globalHistory.addBankOperation(interbankOperation);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            } else if(InterbankTransfer.class.isInstance(interbankOperation)) {
+                handleWrongInterbankTransfer(sourceBankId, (InterbankTransfer) interbankOperation);
+            }
+        }
+    }
+
+    private void handleWrongInterbankTransfer(long sourceBankId, InterbankTransfer interbankTransfer) {
+        UnsuccessfulInterbankTransfer unsuccessfulInterbankTransfer =
+                new UnsuccessfulInterbankTransfer("Return for unsuccessful transfer " + interbankTransfer.getDescription(),
+                        interbankTransfer.getAmount());
+        storeInterbankOperation(sourceBankId, interbankTransfer.getSourceBankAccountId(), unsuccessfulInterbankTransfer);
     }
 }
