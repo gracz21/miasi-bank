@@ -1,7 +1,7 @@
 package pl.put.miasi.bank.banks;
 
+import pl.put.miasi.bank.History;
 import pl.put.miasi.bank.bankMechanisms.InterestMechanism;
-import pl.put.miasi.bank.bankOperations.BankOperation;
 import pl.put.miasi.bank.bankOperations.bankAccountOperations.Payment;
 import pl.put.miasi.bank.bankOperations.bankAccountOperations.Transfer;
 import pl.put.miasi.bank.bankOperations.bankAccountOperations.Withdrawal;
@@ -11,12 +11,12 @@ import pl.put.miasi.bank.bankOperations.bankAccountOperations.interbankOperation
 import pl.put.miasi.bank.bankOperations.bankAccountOperations.interbankOperations.UnsuccessfulInterbankTransfer;
 import pl.put.miasi.bank.bankOperations.bankProductOperations.InterestCalculation;
 import pl.put.miasi.bank.bankOperations.bankProductOperations.InterestMechanismChange;
+import pl.put.miasi.bank.bankOperations.bankProductOperations.ReportCreation;
 import pl.put.miasi.bank.bankOperations.creditOperations.CreditInstallmentRepayment;
 import pl.put.miasi.bank.bankOperations.creditOperations.CreditTaking;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositAssumption;
 import pl.put.miasi.bank.bankOperations.depositOperations.DepositBroke;
 import pl.put.miasi.bank.bankProducts.*;
-import pl.put.miasi.bank.bankProducts.bankAccount.BankAccount;
 import pl.put.miasi.bank.bankProducts.bankAccount.BankAccountDecorator;
 import pl.put.miasi.bank.banks.exceptions.NoOperationsExceptions;
 import pl.put.miasi.bank.reports.Report;
@@ -34,11 +34,13 @@ public class Bank {
     private BankMediator bankMediator;
     private Map<Long, BankProduct> bankProducts;
     private Map<Long, Map<Long, InterbankOperation>> interbankOperationsMap;
+    private History globalHistory;
 
     public Bank() {
         this.bankId = idCounter.incrementAndGet();
         this.bankProducts = new HashMap<>();
         this.interbankOperationsMap = new HashMap<>();
+        this.globalHistory = new History();
     }
 
     long getBankId() {
@@ -53,22 +55,24 @@ public class Bank {
         this.bankMediator = bankMediator;
     }
 
-//    public List<BankOperation> collectGlobalHistory() {
-//        List<BankOperation> globalHistory = new LinkedList<>();
-//
-//        for (BankProduct bankProduct: bankProducts)
-//            globalHistory.addAll(bankProduct.getHistory().getBankOperations());
-//
-//        Collections.sort(globalHistory);
-//        return globalHistory;
-//    }
-
     public void payment(BankAccountDecorator bankAccountDecorator, double amount, String description) throws Exception {
-        bankAccountDecorator.doOperation(new Payment(description, bankAccountDecorator, amount));
+        Payment bankOperation = new Payment(description, bankAccountDecorator, amount);
+        try {
+            bankAccountDecorator.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void withdrawal(BankAccountDecorator bankAccountDecorator, double amount, String description) throws Exception {
-        bankAccountDecorator.doOperation(new Withdrawal(description, bankAccountDecorator, amount));
+        Withdrawal bankOperation = new Withdrawal(description, bankAccountDecorator, amount);
+        try {
+            bankAccountDecorator.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void transfer(BankAccountDecorator sourceBankAccountDecorator, BankAccountDecorator targetBankAccountDecorator, double amount, String description) throws Exception {
@@ -78,27 +82,76 @@ public class Bank {
     }
 
     public void interestCalculation(BankProduct bankProduct, String description) throws Exception {
-        bankProduct.doOperation(new InterestCalculation(description, bankProduct));
+        InterestCalculation bankOperation = new InterestCalculation(description, bankProduct);
+        try {
+            bankProduct.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void interestMechanismChange(InterestMechanism interestMechanism, BankProduct bankProduct, String description) throws Exception {
-        bankProduct.doOperation(new InterestMechanismChange(description, interestMechanism, bankProduct));
+        InterestMechanismChange bankOperation = new InterestMechanismChange(description, interestMechanism, bankProduct);
+        try {
+            bankProduct.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void creditTaking(double amount, BankAccountDecorator bankAccountDecorator, InterestMechanism interestMechanism, String description) throws Exception {
-        bankAccountDecorator.doOperation(new CreditTaking(description, amount, bankAccountDecorator, interestMechanism, this));
+        CreditTaking bankOperation = new CreditTaking(description, amount, bankAccountDecorator, interestMechanism, this);
+        try {
+            bankAccountDecorator.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void creditInstallmentRepayment(BankAccountDecorator bankAccountDecorator, Credit credit, String description) throws Exception {
-        credit.doOperation(new CreditInstallmentRepayment(description, credit));
+        CreditInstallmentRepayment bankOperation = new CreditInstallmentRepayment(description, credit);
+        try {
+            credit.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void depositAssumption(BankAccountDecorator bankAccountDecorator, double depositAmount, InterestMechanism interestMechanism, String description) throws Exception {
-        bankAccountDecorator.doOperation(new DepositAssumption(description, bankAccountDecorator, depositAmount, interestMechanism, this));
+        DepositAssumption bankOperation = new DepositAssumption(description, bankAccountDecorator, depositAmount, interestMechanism, this);
+        try {
+            bankAccountDecorator.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void depositBroke(Deposit deposit, String description) throws Exception {
-        deposit.doOperation(new DepositBroke(description, deposit));
+        DepositBroke bankOperation = new DepositBroke(description, deposit);
+        try {
+            deposit.doOperation(bankOperation);
+            globalHistory.addBankOperation(bankOperation);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<BankProduct> doReport(Report report, String description) throws Exception {
+        ReportCreation reportCreation = new ReportCreation(description, new ArrayList<BankProduct>(bankProducts.values()), report);
+        List<BankProduct> result = null;
+        try {
+            reportCreation.execute();
+            globalHistory.addBankOperation(reportCreation);
+            result = reportCreation.getResults();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public void interbankTransfer(BankAccountDecorator sourceBankAccount, long targetBankAccountId,
@@ -106,11 +159,17 @@ public class Bank {
         InterbankTransfer sourceTransfer = new InterbankTransfer(description, sourceBankAccount.getId(),
                 targetBankAccountId, amount, TransferDirection.OUT);
         sourceTransfer.setExecutorObject(sourceBankAccount);
-        sourceBankAccount.doOperation(sourceTransfer);
 
-        InterbankTransfer targetTransfer = new InterbankTransfer(description, sourceBankAccount.getId(),
-                targetBankAccountId, amount, TransferDirection.IN);
-        storeInterbankOperation(targetBankId, targetBankAccountId, targetTransfer);
+        try {
+            sourceBankAccount.doOperation(sourceTransfer);
+            globalHistory.addBankOperation(sourceTransfer);
+
+            InterbankTransfer targetTransfer = new InterbankTransfer(description, sourceBankAccount.getId(),
+                    targetBankAccountId, amount, TransferDirection.IN);
+            storeInterbankOperation(targetBankId, targetBankAccountId, targetTransfer);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void handleInterbankOperations(long sourceBankId, Map<Long, InterbankOperation> interbankOperations) throws Exception {
@@ -120,7 +179,12 @@ public class Bank {
 
             if(targetBankAccount != null && BankAccountDecorator.class.isInstance(targetBankAccount)) {
                 interbankOperationEntry.getValue().setExecutorObject(((BankAccountDecorator)targetBankAccount));
-                targetBankAccount.doOperation(interbankOperation);
+                try {
+                    targetBankAccount.doOperation(interbankOperation);
+                    globalHistory.addBankOperation(interbankOperation);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             } else if(InterbankTransfer.class.isInstance(interbankOperation)) {
                 UnsuccessfulInterbankTransfer unsuccessfulInterbankTransfer =
                         new UnsuccessfulInterbankTransfer("Return for unsuccessful transfer " + interbankOperation.getDescription(),
@@ -145,11 +209,5 @@ public class Bank {
         } else {
             throw new NoOperationsExceptions("No operations stored for this bank");
         }
-    }
-
-    public List<BankProduct> doReport(Report report) {
-        List<BankProduct> result = new ArrayList<>();
-        bankProducts.forEach((id, bankProduct) -> result.add(bankProduct.accept(report)));
-        return result;
     }
 }
